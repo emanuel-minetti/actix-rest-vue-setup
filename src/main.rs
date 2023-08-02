@@ -16,8 +16,10 @@ async fn main() -> std::io::Result<()> {
             .service(
                 web::scope("/api")
                     .route("/", web::get().to(hello_from_api))
+                    // TODO add a health check
             )
             .service(
+                // TODO serve static files
                 web::scope("")
                     .route("/{route}", web::get().to(hello_from_default))
                     .route("/", web::get().to(hello_from_default))
