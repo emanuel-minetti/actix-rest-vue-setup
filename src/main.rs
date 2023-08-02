@@ -15,8 +15,7 @@ async fn main() -> std::io::Result<()> {
             )
             .service(
                 web::scope("/api")
-                    .route("/", web::get().to(hello_from_api))
-                    // TODO add a health check
+                    .route("/health_check", web::get().to(heath_check))
             )
             .service(
                 // TODO serve static files
@@ -30,8 +29,8 @@ async fn main() -> std::io::Result<()> {
         .await
 }
 
-async fn hello_from_api() -> impl Responder {
-    HttpResponse::Ok().body("Here is the API!")
+async fn heath_check() -> impl Responder {
+    HttpResponse::Ok()
 }
 
 async fn hello_from_login() -> impl Responder {
