@@ -1,9 +1,15 @@
-# Actix SPA boilerplate for Vue Apps using Bootstrap and Login via Postgresql
+# Actix SPA boilerplate
+
+We'll build a web app using [aktix](https://actix.rs/)
+for serving a REST API as well as the [Vue](https://vuejs.org/)
+client. (This may not be the optimal setup, but it keeps everything
+nicely in place (and in *one* repository :grinning: )
 
 ## TODO
 - Add more tests for exposed routes
 - Add Bootstrap
+- Add CI (maybe using `cargo-make`. We'll want testing,
+building and preparing commit in one place)
 - Add *real* E2E tests (client browser tests)
-- Add CI
-- Add Login and restrict side access
+- Add Login and restrict side and API access
 - Implement dummy service
