@@ -26,6 +26,7 @@ pub fn run() -> Result<Server, std::io::Error> {
 }
 
 async fn health_check() -> impl Responder {
+    // TODO Test for static directory
     HttpResponse::Ok()
 }
 
