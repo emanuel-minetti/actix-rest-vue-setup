@@ -1,6 +1,6 @@
 use actix_files::{Files, NamedFile};
-use actix_web::{App, HttpResponse, HttpServer, Responder, web};
 use actix_web::dev::Server;
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 
 pub fn run() -> Result<Server, std::io::Error> {
     let server = HttpServer::new(|| {
@@ -20,8 +20,8 @@ pub fn run() -> Result<Server, std::io::Error> {
                     .route("/", web::get().to(return_index)),
             )
     })
-        .bind(("127.0.0.1", 8080))?
-        .run();
+    .bind(("127.0.0.1", 8080))?
+    .run();
     Ok(server)
 }
 
@@ -37,10 +37,10 @@ async fn hello_from_logout() -> impl Responder {
     HttpResponse::Ok().body("Here is the Logout API!")
 }
 
-async fn return_favicon() -> Result<NamedFile,std::io::Error> {
-    Ok(NamedFile::open("./src/vue-client/dist/favicon.ico")?)
+async fn return_favicon() -> Result<NamedFile, std::io::Error> {
+    NamedFile::open("./src/vue-client/dist/favicon.ico")
 }
 
-async fn return_index() -> Result<NamedFile,std::io::Error> {
-    Ok(NamedFile::open("./src/vue-client/dist/index.html")?)
+async fn return_index() -> Result<NamedFile, std::io::Error> {
+    NamedFile::open("./src/vue-client/dist/index.html")
 }
