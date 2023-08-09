@@ -1,3 +1,3 @@
 mod health_check;
 mod helpers;
-//mod static_content;
+mod static_content;
