@@ -1,5 +1,4 @@
-use crate::helpers::spawn_app;
-use regex::Regex;
+use crate::helpers::{get_index_matching_re, spawn_app};
 use std::fs::File;
 use std::io::{BufReader, Read};
 
@@ -33,25 +32,7 @@ async fn url_root_routes_to_index() {
     // Arrange
     spawn_app().await;
     let client = reqwest::Client::new();
-    let re = Regex::new(
-        r#"<!DOCTYPE html>
-<html lang="en">
- {2}<head>
- {4}<meta charset="UTF-8">
- {4}<link rel="icon" href="/favicon\.ico">
- {4}<meta name="viewport" content="width=device-width, initial-scale=1\.0">
- {4}<title>Vite App</title>
- {4}<script type="module" crossorigin src="/assets/index-[0-9a-f]+\.js"></script>
- {4}<link rel="stylesheet" href="/assets/index-[0-9a-f]+\.css">
- {2}</head>
- {2}<body>
- {4}<div id="app"></div>
- {4}
- {2}</body>
-</html>
-"#,
-    )
-    .expect("RegEx should be parseable.");
+    let re = get_index_matching_re();
     // Act
     let urls = vec!["", "/"];
     for url in urls {
