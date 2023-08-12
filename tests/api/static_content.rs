@@ -70,10 +70,9 @@ async fn url_root_routes_to_index() {
                     .expect("Failed to get request body")
                     .as_str()
             )
-                .collect::<Vec<_>>()
-                .len(),
+            .collect::<Vec<_>>()
+            .len(),
             1
         );
     }
-
 }
