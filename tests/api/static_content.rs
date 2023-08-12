@@ -1,6 +1,7 @@
+use crate::helpers::spawn_app;
+use regex::Regex;
 use std::fs::File;
 use std::io::{BufReader, Read};
-use crate::helpers::spawn_app;
 
 #[tokio::test]
 async fn favicon_works() {
@@ -25,4 +26,54 @@ async fn favicon_works() {
     let response_bytes = response.bytes().await;
     let response_buffer = response_bytes.expect("Should be able to open response answer");
     assert_eq!(file_buffer, response_buffer);
+}
+
+#[tokio::test]
+async fn url_root_routes_to_index() {
+    // Arrange
+    spawn_app().await;
+    let client = reqwest::Client::new();
+    let re = Regex::new(
+        r#"<!DOCTYPE html>
+<html lang="en">
+ {2}<head>
+ {4}<meta charset="UTF-8">
+ {4}<link rel="icon" href="/favicon\.ico">
+ {4}<meta name="viewport" content="width=device-width, initial-scale=1\.0">
+ {4}<title>Vite App</title>
+ {4}<script type="module" crossorigin src="/assets/index-[0-9a-f]+\.js"></script>
+ {4}<link rel="stylesheet" href="/assets/index-[0-9a-f]+\.css">
+ {2}</head>
+ {2}<body>
+ {4}<div id="app"></div>
+ {4}
+ {2}</body>
+</html>
+"#,
+    )
+    .expect("RegEx should be parseable.");
+    // Act
+    let urls = vec!["", "/"];
+    for url in urls {
+        let response = client
+            .get("http://127.0.0.1:8080".to_owned() + url)
+            .send()
+            .await
+            .expect("Failed to execute request.");
+        //Assert
+        assert!(response.status().is_success());
+        assert_eq!(
+            re.captures_iter(
+                response
+                    .text()
+                    .await
+                    .expect("Failed to get request body")
+                    .as_str()
+            )
+                .collect::<Vec<_>>()
+                .len(),
+            1
+        );
+    }
+
 }
