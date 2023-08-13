@@ -1,7 +1,8 @@
 use crate::helpers::spawn_app;
+use rand::Rng;
+use regex::Regex;
 use std::fs::File;
 use std::io::{BufReader, Read};
-use regex::Regex;
 
 #[tokio::test]
 async fn favicon_works() {
@@ -58,6 +59,50 @@ async fn url_root_routes_to_index() {
         );
     }
 }
+
+#[tokio::test]
+async fn random_url_routes_to_index() {
+    // Arrange
+    spawn_app().await;
+    let client = reqwest::Client::new();
+    let re = get_index_matching_reg_ex();
+    let urls = get_random_urls(10, 15);
+
+    // Act
+    for url in urls {
+        let response = client
+            .get("http://127.0.0.1:8080".to_owned() + "/" + url.as_str())
+            .send()
+            .await
+            .expect("Failed to execute request.");
+        //Assert
+        assert!(response.status().is_success());
+        assert_eq!(
+            re.captures_iter(
+                response
+                    .text()
+                    .await
+                    .expect("Failed to get request body")
+                    .as_str()
+            )
+            .collect::<Vec<_>>()
+            .len(),
+            1
+        );
+    }
+}
+
+fn get_random_string(length: u8) -> String {
+    const CHARSET: &[u8] = b"abcdefghijklmnopqrstuvwxyz0123456789~";
+    let mut rng = rand::thread_rng();
+    (0..length)
+        .map(|_| {
+            let index = rng.gen_range(0..CHARSET.len());
+            CHARSET[index] as char
+        })
+        .collect()
+}
+
 pub fn get_index_matching_reg_ex() -> Regex {
     Regex::new(
         r#"<!DOCTYPE html>
@@ -76,5 +121,21 @@ pub fn get_index_matching_reg_ex() -> Regex {
  {2}</body>
 </html>
 "#,
-    ).unwrap()
+    )
+    .unwrap()
+}
+
+fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
+    let mut res = Vec::new();
+    while res.len() < size {
+        let candidate = get_random_string(url_length);
+        if !candidate.starts_with("/api")
+            && !candidate.starts_with("/login")
+            && candidate.chars().nth(0).unwrap() != '~'
+            && !candidate.chars().nth(0).unwrap().is_ascii_digit()
+        {
+            res.push(candidate);
+        }
+    }
+    res
 }

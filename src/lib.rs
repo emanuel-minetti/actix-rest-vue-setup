@@ -1,8 +1,9 @@
-use actix_files::{Files, NamedFile};
+use actix_files::Files;
 use actix_web::dev::Server;
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use std::path::Path;
 
+mod static_content;
 pub fn run() -> Result<Server, std::io::Error> {
     let server = HttpServer::new(|| {
         App::new()
@@ -16,9 +17,12 @@ pub fn run() -> Result<Server, std::io::Error> {
             .service(
                 web::scope("")
                     .service(Files::new("/assets", "./src/vue-client/dist/assets"))
-                    .route("/favicon.ico", web::get().to(return_favicon))
-                    .route("/{route}", web::get().to(return_index))
-                    .route("/", web::get().to(return_index)),
+                    .route(
+                        "/favicon.ico",
+                        web::get().to(static_content::return_favicon),
+                    )
+                    .route("/{route}", web::get().to(static_content::return_index))
+                    .route("/", web::get().to(static_content::return_index)),
             )
     })
     .bind(("127.0.0.1", 8080))?
@@ -40,12 +44,4 @@ async fn hello_from_login() -> impl Responder {
 
 async fn hello_from_logout() -> impl Responder {
     HttpResponse::Ok().body("Here is the Logout API!")
-}
-
-async fn return_favicon() -> Result<NamedFile, std::io::Error> {
-    NamedFile::open("./src/vue-client/dist/favicon.ico")
-}
-
-async fn return_index() -> Result<NamedFile, std::io::Error> {
-    NamedFile::open("./src/vue-client/dist/index.html")
 }
