@@ -14,6 +14,7 @@ import HelloWorld from './components/HelloWorld.vue'
       </nav>
     </div>
   </header>
+  <button class="btn btn-danger">Test</button>
   <HelloWorld msg="You did it!" />
   <RouterView />
 </template>
