@@ -1,6 +1,6 @@
-import './assets/main.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap'
+import './scss/main.scss'
+// noinspection ES6UnusedImports
+//import { Button } from 'bootstrap'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
