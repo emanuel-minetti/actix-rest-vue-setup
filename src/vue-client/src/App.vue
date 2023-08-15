@@ -31,4 +31,10 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+@import 'scss/main';
+
+.navbar-brand {
+  --bs-navbar-brand-color: #{$primary};
+}
+</style>
