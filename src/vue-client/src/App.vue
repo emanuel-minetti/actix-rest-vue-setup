@@ -1,28 +1,30 @@
 <template>
   <header>
-    <nav class="navbar">
+    <nav class="navbar navbar-expand">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
           <img
             alt="Vue logo"
             src="@/assets/logo.svg"
-            width="125"
-            height="125"
-            class="d-inline-block align-text-top"
+            width="100"
+            height="100"
+            class="d-inline-block"
           />
-          Vite App
+          <span class="h1 text-primary"> Vite App </span>
         </a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/">Home</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/about">About</RouterLink>
+          </li>
+        </ul>
       </div>
     </nav>
   </header>
-  <div class="wrapper">
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-    </nav>
-  </div>
   <button class="btn btn-primary">Test</button>
-  <HelloWorld msg="You did it!" />
+  <HelloWorld msg="Welcome" />
   <RouterView />
 </template>
 
@@ -34,7 +36,8 @@ import HelloWorld from './components/HelloWorld.vue'
 <style lang="scss" scoped>
 @import 'scss/main';
 
-.navbar-brand {
-  --bs-navbar-brand-color: #{$primary};
+.nav-link {
+  @extend .fs-3;
+  @extend .text-primary;
 }
 </style>
