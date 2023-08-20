@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar navbar-expand">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+        <RouterLink class="nav-link active" to="/">
           <img
             alt="Vue logo"
             src="@/assets/logo.svg"
@@ -11,7 +11,7 @@
             class="d-inline-block"
           />
           <span class="h1 text-primary"> Vite App </span>
-        </a>
+        </RouterLink>
         <ul class="navbar-nav">
           <li class="nav-item">
             <RouterLink class="nav-link active" to="/">Home</RouterLink>
