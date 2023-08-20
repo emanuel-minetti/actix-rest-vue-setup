@@ -14,7 +14,7 @@
         </a>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/">Home</RouterLink>
+            <RouterLink class="nav-link active" to="/">Home</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/about">About</RouterLink>
@@ -23,14 +23,11 @@
       </div>
     </nav>
   </header>
-  <button class="btn btn-primary">Test</button>
-  <HelloWorld msg="Welcome" />
   <RouterView />
 </template>
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -39,5 +36,8 @@ import HelloWorld from './components/HelloWorld.vue'
 .nav-link {
   @extend .fs-3;
   @extend .text-primary;
+}
+.active {
+  @extend .fw-bold;
 }
 </style>
