@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar navbar-expand">
       <div class="container-fluid">
-        <RouterLink class="nav-link active" to="/">
+        <RouterLink class="nav-link" to="/">
           <img
             alt="Vue logo"
             src="@/assets/logo.svg"
@@ -14,7 +14,7 @@
         </RouterLink>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <RouterLink class="nav-link active" to="/">Home</RouterLink>
+            <RouterLink class="nav-link" to="/">Home</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/about">About</RouterLink>
@@ -37,7 +37,8 @@ import { RouterLink, RouterView } from 'vue-router'
   @extend .fs-3;
   @extend .text-primary;
 }
-.active {
+
+.router-link-active {
   @extend .fw-bold;
 }
 </style>
