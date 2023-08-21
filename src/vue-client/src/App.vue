@@ -36,7 +36,7 @@
             <RouterLink class="nav-link" to="/imprint">Imprint</RouterLink>
           </li>
           <li>
-            <RouterLink class="nav-link" to="/dataprivacy">Data Privacy Declaration</RouterLink>
+            <RouterLink class="nav-link" to="/data-privacy">Data Privacy Declaration</RouterLink>
           </li>
           <li>
             <a class="nav-link" href="https://example.com">Company home page</a>

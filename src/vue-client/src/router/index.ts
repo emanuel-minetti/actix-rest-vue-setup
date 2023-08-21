@@ -17,7 +17,7 @@ const router = createRouter({
       component: ImprintView
     },
     {
-      path: '/dataprivacy',
+      path: '/data-privacy',
       name: 'privacy',
       component: DataPrivacy
     },
