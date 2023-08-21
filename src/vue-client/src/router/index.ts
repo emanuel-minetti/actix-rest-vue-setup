@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import ImprintView from '@/views/ImprintView.vue'
+import DataPrivacy from '@/views/DataPrivacy.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +10,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/imprint',
+      name: 'imprint',
+      component: ImprintView
+    },
+    {
+      path: '/dataprivacy',
+      name: 'privacy',
+      component: DataPrivacy
     },
     {
       path: '/about',

@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="outside-main">
     <nav class="navbar navbar-expand">
       <div class="container-fluid">
         <RouterLink class="nav-link" to="/">
@@ -23,7 +23,28 @@
       </div>
     </nav>
   </header>
-  <RouterView />
+  <main>
+    <div class="container">
+      <RouterView />
+    </div>
+  </main>
+  <footer class="outside-main mt-3">
+    <div class="container-fluid">
+      <div class="footer-links">
+        <ul class="list-unstyled">
+          <li>
+            <RouterLink class="nav-link" to="/imprint">Imprint</RouterLink>
+          </li>
+          <li>
+            <RouterLink class="nav-link" to="/dataprivacy">Data Privacy Declaration</RouterLink>
+          </li>
+          <li>
+            <a class="nav-link" href="https://example.com">Company home page</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script setup lang="ts">
@@ -33,9 +54,13 @@ import { RouterLink, RouterView } from 'vue-router'
 <style lang="scss" scoped>
 @import 'scss/main';
 
-.nav-link {
+.navbar .nav-link {
   @extend .fs-3;
   @extend .text-primary;
+}
+
+.outside-main {
+  background-color: $gray-200;
 }
 
 .router-link-active {
