@@ -19,8 +19,7 @@ is not planned.
 
 ## TODO
 - Add more tests for exposed routes
-- Add Bootstrap
-- Add CI (maybe using `cargo-make`. We'll want testing,
+- Add CI (probably using `cargo-make`. We'll want testing,
 building and preparing commit in one place)
 - Add *real* E2E tests (client browser tests)
 - Add Login and restrict side and API access
