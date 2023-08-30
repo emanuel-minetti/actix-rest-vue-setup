@@ -24,4 +24,4 @@ is not planned.
 building and preparing commit in one place)
 - Add *real* E2E tests (client browser tests)
 - Add Login and restrict side and API access
-- Implement dummy service
+- Improve health check for DB connection and FS access.
