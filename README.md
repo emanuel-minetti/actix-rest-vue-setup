@@ -15,7 +15,7 @@ Further on we'll implement a login API and page using a
 [Postgresql](https://www.postgresql.org/) backend. For further
 authentication we'll be using [JWT](https://jwt.io/).
 
-Some steps will be available via [branches].Further modularization
+Some steps will be available via [branches]. Further modularization
 is not planned.
 
 ## TODO
