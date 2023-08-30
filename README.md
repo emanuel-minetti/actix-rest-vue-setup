@@ -3,8 +3,11 @@
 We'll build a web app using [aktix](https://actix.rs/)
 for serving a REST API as well as the [Vue](https://vuejs.org/)
 client. (This may not be the optimal setup, but it keeps everything
-nicely in place (and in *one* repository :grinning:)). We'll add E2E
-testing for the API as well as the client.
+nicely in place (and in *one* repository :grinning:)).
+We'll add component
+testing for the API (where needed) and E2E
+(via [Cypress](https://www.cypress.io/))
+testing the client.
 
 We'll implement a login API and page using a
 [Postgresql](https://www.postgresql.org/) backend. For further
