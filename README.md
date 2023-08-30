@@ -9,11 +9,12 @@ testing for the API (where needed) and E2E
 (via [Cypress](https://www.cypress.io/))
 testing the client.
 
-We'll implement a login API and page using a
+Next we'll add internationalisation (via [vue-i18n](https://vue-i18n.intlify.dev/)).
+Further on we'll implement a login API and page using a
 [Postgresql](https://www.postgresql.org/) backend. For further
 authentication we'll be using [JWT](https://jwt.io/).
 
-Some steps will be available via [releases]. Further modularization
+Some steps will be available via [branches]. Further modularization
 is not planned.
 
 ## TODO
