@@ -92,17 +92,6 @@ async fn random_url_routes_to_index() {
     }
 }
 
-fn get_random_string(length: u8) -> String {
-    const CHARSET: &[u8] = b"abcdefghijklmnopqrstuvwxyz0123456789~";
-    let mut rng = rand::thread_rng();
-    (0..length)
-        .map(|_| {
-            let index = rng.gen_range(0..CHARSET.len());
-            CHARSET[index] as char
-        })
-        .collect()
-}
-
 pub fn get_index_matching_reg_ex() -> Regex {
     Regex::new(
         r#"<!DOCTYPE html>
@@ -138,4 +127,15 @@ fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
         }
     }
     res
+}
+
+fn get_random_string(length: u8) -> String {
+    const CHARSET: &[u8] = b"abcdefghijklmnopqrstuvwxyz0123456789~";
+    let mut rng = rand::thread_rng();
+    (0..length)
+        .map(|_| {
+            let index = rng.gen_range(0..CHARSET.len());
+            CHARSET[index] as char
+        })
+        .collect()
 }
