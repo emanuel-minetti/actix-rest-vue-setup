@@ -1,6 +1,6 @@
 <template>
   <Title msg="About" />
-  <h1>This is an about page</h1>
+  <p>This is an about page</p>
 </template>
 
 <script lang="ts">

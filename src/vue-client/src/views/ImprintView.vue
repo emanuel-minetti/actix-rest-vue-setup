@@ -1,7 +1,7 @@
 <template>
   <main>
     <Title msg="Imprint" />
-    <h1>This is the imprint page</h1>
+    <p>This is the imprint page</p>
   </main>
 </template>
 
