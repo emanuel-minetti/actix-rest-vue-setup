@@ -4,10 +4,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Title from '@/components/Title.vue'
+import { defineComponent } from 'vue';
+import Title from '@/components/Title.vue';
 
 export default defineComponent({
-  components: { Title }
-})
+  components: { Title },
+});
 </script>
