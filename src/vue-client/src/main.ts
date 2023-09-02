@@ -1,6 +1,5 @@
 import './scss/main.scss';
 // noinspection ES6UnusedImports
-//import { Button } from 'bootstrap'
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
