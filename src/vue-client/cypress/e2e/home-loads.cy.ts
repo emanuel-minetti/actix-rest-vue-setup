@@ -1,5 +1,3 @@
-// https://on.cypress.io/api
-
 describe('Visiting the home page', () => {
   it('loads', () => {
     cy.visit('');
