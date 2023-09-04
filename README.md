@@ -5,7 +5,7 @@ It uses Actix for serving a REST API as well as the [Vue](https://vuejs.org/)
 client. (This may not be the optimal setup, but it keeps everything
 nicely in place (and in *one* repository :grinning:)).
 As a CSS framework [Bootstrap](https://getbootstrap.com/) is used.
-The boilerplate is not very optioned, so many choices are hardcoded.
+The boilerplate is a bit opinionated, so many choices are hardcoded.
 
 The Component testing is done via [Reqwest](https://docs.rs/reqwest/latest/reqwest/) for the API
 and where needed via Vitest for the client. The whole app is E2E tested
