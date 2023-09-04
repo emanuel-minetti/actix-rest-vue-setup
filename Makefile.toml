@@ -25,3 +25,5 @@ dependencies = [
 ]
 command = "cargo"
 args = ["test"]
+
+[task.build-prod]
