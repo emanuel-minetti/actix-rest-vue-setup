@@ -121,8 +121,8 @@ fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
         let candidate = get_random_string(url_length);
         if !candidate.starts_with("/api")
             && !candidate.starts_with("/login")
-            && candidate.chars().nth(0).unwrap() != '~'
-            && !candidate.chars().nth(0).unwrap().is_ascii_digit()
+            && !candidate.starts_with('~')
+            && !candidate.chars().next().unwrap().is_ascii_digit()
         {
             res.push(candidate);
         }

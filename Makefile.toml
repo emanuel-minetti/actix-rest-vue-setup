@@ -8,8 +8,20 @@ args = ["fmt", "--", "--emit=files"]
 
 [tasks.lint]
 command = "cargo"
-args = ["clippy", "--fix"]
+args = ["clippy", "--fix", "--allow-dirty"]
 
-[tasks.build]
+[tasks.build-only]
 command = "cargo"
 args = ["build"]
+
+[tasks.build]
+dependencies = [
+    "lint", "build-only", "format",
+]
+
+[tasks.test]
+dependencies = [
+    "build-only"
+]
+command = "cargo"
+args = ["test"]
