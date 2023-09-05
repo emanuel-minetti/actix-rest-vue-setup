@@ -1,29 +1,45 @@
-[tasks.clean]
+[tasks.server-clean]
 command = "cargo"
 args = ["clean"]
 
-[tasks.format]
+[tasks.server-format]
 command = "cargo"
 args = ["fmt", "--", "--emit=files"]
 
-[tasks.lint]
+[tasks.server-lint]
 command = "cargo"
 args = ["clippy", "--fix", "--allow-dirty"]
 
-[tasks.build-only]
+[tasks.server-build-only]
 command = "cargo"
 args = ["build"]
 
-[tasks.build]
+[tasks.server-build-only-prod]
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.server-build]
 dependencies = [
-    "lint", "build-only", "format",
+    "server-lint", "server-build-only", "server-format",
 ]
 
-[tasks.test]
+[tasks.server-build-prod]
 dependencies = [
-    "build-only"
+    "server-lint", "server-build-only-prod", "server-format",
+]
+
+[tasks.server-test]
+dependencies = [
+    "server-build-only"
 ]
 command = "cargo"
 args = ["test"]
 
-[task.build-prod]
+[tasks.server-run]
+dependencies = [
+    "server-build"
+]
+command = "cargo"
+args = ["run"]
+
+[tasks.client-clean]
