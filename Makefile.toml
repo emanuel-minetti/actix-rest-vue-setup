@@ -1,3 +1,9 @@
+[tasks.clean]
+dependencies = ["server-clean", "client-clean"]
+
+[tasks.build-only]
+dependencies = ["server-build-only", "client-build-only"]
+
 [tasks.server-clean]
 command = "cargo"
 args = ["clean"]
@@ -35,7 +41,7 @@ dependencies = [
 command = "cargo"
 args = ["test"]
 
-[tasks.server-run]
+[tasks.run]
 dependencies = [
     "server-build"
 ]
@@ -43,3 +49,19 @@ command = "cargo"
 args = ["run"]
 
 [tasks.client-clean]
+cwd = "./src/vue-client"
+script = [
+    "npm run clean"
+]
+
+[tasks.client-format]
+cwd = "./src/vue-client"
+script = [
+    "npm run format"
+]
+
+[tasks.client-build-only]
+cwd = "./src/vue-client"
+script = [
+    "npm run dev"
+]
