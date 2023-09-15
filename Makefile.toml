@@ -63,8 +63,9 @@ script = [
 ]
 
 [tasks.client-build-only]
-condition =  { files_modified = {input = ["./src/vue-client/**"], output = ["./public/index.html"]}}
-cwd = "./src/vue-client"
+condition =  { files_modified = {input = ["./src/vue-client/**/*"], output = ["./public/*"]}}
 script = [
-    "npm run dev"
+    "cd src/vue-client",
+    "npm run dev",
+    "cd ../.."
 ]
