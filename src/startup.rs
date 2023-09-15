@@ -14,7 +14,7 @@ pub fn run() -> Result<Server, std::io::Error> {
             .service(web::scope("/api").route("/health_check", web::get().to(routes::health_check)))
             .service(
                 web::scope("")
-                    .service(Files::new("/assets", "./src/vue-client/dist/assets"))
+                    .service(Files::new("/assets", "./public/assets"))
                     .route("/favicon.ico", web::get().to(routes::return_favicon))
                     .route("/{route}", web::get().to(routes::return_index))
                     .route("/", web::get().to(routes::return_index)),

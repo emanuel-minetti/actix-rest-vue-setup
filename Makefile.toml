@@ -4,6 +4,7 @@ dependencies = ["server-clean", "client-clean"]
 [tasks.build-only]
 dependencies = ["server-build-only", "client-build-only"]
 
+#server
 [tasks.server-clean]
 command = "cargo"
 args = ["clean"]
@@ -48,6 +49,7 @@ dependencies = [
 command = "cargo"
 args = ["run"]
 
+#client
 [tasks.client-clean]
 cwd = "./src/vue-client"
 script = [
@@ -61,6 +63,7 @@ script = [
 ]
 
 [tasks.client-build-only]
+condition =  { files_modified = {input = ["./src/vue-client/**"], output = ["./public/index.html"]}}
 cwd = "./src/vue-client"
 script = [
     "npm run dev"
