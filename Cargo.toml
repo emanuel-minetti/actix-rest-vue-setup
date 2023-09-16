@@ -10,7 +10,7 @@ path = "src/lib.rs"
 
 [[bin]]
 path = "src/main.rs"
-name = "actix-rest-vue-setup"
+name = "actix-rest-vue-setup-main"
 
 [dependencies]
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
