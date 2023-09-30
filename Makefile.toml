@@ -4,6 +4,9 @@ dependencies = ["server-clean", "client-clean"]
 [tasks.build-only]
 dependencies = ["server-build-only", "client-build-only"]
 
+[tasks.format]
+dependencies = ["server-format", "client-format"]
+
 #server
 [tasks.server-clean]
 command = "cargo"
@@ -27,7 +30,7 @@ args = ["build", "--release"]
 
 [tasks.server-build]
 dependencies = [
-    "server-lint", "server-build-only", "server-format",
+    "server-lint", "server-format", "server-build-only",
 ]
 
 [tasks.server-build-prod]
@@ -58,6 +61,7 @@ script = [
 
 [tasks.client-format]
 cwd = "./src/vue-client"
+condition =  { files_modified = {input = ["./**/*"], output = ["../../public/*"]}}
 script = [
     "npm run format"
 ]
