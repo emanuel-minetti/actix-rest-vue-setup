@@ -1,8 +1,8 @@
 [tasks.clean]
 dependencies = ["server-clean", "client-clean"]
 
-[tasks.build-only]
-dependencies = ["server-build-only", "client-build-only"]
+[tasks.build]
+dependencies = ["server-build", "client-build"]
 
 [tasks.format]
 dependencies = ["server-format", "client-format"]
@@ -20,27 +20,17 @@ args = ["fmt", "--", "--emit=files"]
 command = "cargo"
 args = ["clippy", "--fix", "--allow-dirty"]
 
-[tasks.server-build-only]
+[tasks.server-build]
 command = "cargo"
 args = ["build"]
 
-[tasks.server-build-only-prod]
+[tasks.server-build-prod]
 command = "cargo"
 args = ["build", "--release"]
 
-[tasks.server-build]
-dependencies = [
-    "server-lint", "server-format", "server-build-only",
-]
-
-[tasks.server-build-prod]
-dependencies = [
-    "server-lint", "server-build-only-prod", "server-format",
-]
-
 [tasks.server-test]
 dependencies = [
-    "server-build-only"
+    "server-build"
 ]
 command = "cargo"
 args = ["test"]
@@ -66,7 +56,7 @@ script = [
     "npm run format"
 ]
 
-[tasks.client-build-only]
+[tasks.client-build]
 cwd = "./src/vue-client"
 condition =  { files_modified = {input = ["./**/*"], output = ["../../public/*"]}}
 script = [
