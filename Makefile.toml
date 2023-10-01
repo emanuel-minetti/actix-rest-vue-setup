@@ -24,7 +24,7 @@ command = "cargo"
 args = ["run"]
 
 [tasks.test]
-dependencies = ["server-test"]
+dependencies = ["server-test", "client-test"]
 
 #server
 [tasks.server-clean]
@@ -85,4 +85,10 @@ script = [
 cwd = "./src/vue-client"
 script = [
     "npm run type-check && npm run lint"
+]
+
+[tasks.client-test]
+cwd = "./src/vue-client"
+script = [
+    "npm run test:unit"
 ]
