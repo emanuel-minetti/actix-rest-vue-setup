@@ -23,6 +23,9 @@ dependencies = ["build-prod"]
 command = "cargo"
 args = ["run"]
 
+[tasks.test]
+dependencies = ["server-test"]
+
 #server
 [tasks.server-clean]
 command = "cargo"
@@ -45,9 +48,7 @@ command = "cargo"
 args = ["clippy", "--fix", "--allow-dirty"]
 
 [tasks.server-test]
-dependencies = [
-    "server-build"
-]
+dependencies = ["server-format", "server-lint"]
 command = "cargo"
 args = ["test"]
 
@@ -60,14 +61,16 @@ script = [
 
 [tasks.client-build]
 cwd = "./src/vue-client"
-condition =  { files_modified = {input = ["./**/*"], output = ["../../public/*"]}}
+condition =  { files_modified = {input = ["./**/*", "./*", "../../*"], output = ["../../public/*"]}}
+dependencies = ["client-clean"]
 script = [
     "npm run dev"
 ]
 
 [tasks.client-build-prod]
 cwd = "./src/vue-client"
-condition =  { files_modified = {input = ["./**/*"], output = ["../../public/*"]}}
+condition =  { files_modified = {input = ["./**/*", "./*", "../../*"], output = ["../../public/*"]}}
+dependencies = ["client-clean"]
 script = [
     "npm run build-only"
 ]
