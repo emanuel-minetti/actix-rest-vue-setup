@@ -4,21 +4,29 @@ dependencies = ["server-clean", "client-clean"]
 [tasks.build]
 dependencies = ["server-build", "client-build"]
 
+[tasks.build-prod]
+dependencies = ["server-build-prod", "client-build-prod"]
+
 [tasks.format]
 dependencies = ["server-format", "client-format"]
+
+[tasks.lint]
+dependencies = ["server-lint", "client-lint"]
+
+[tasks.run]
+dependencies = ["build"]
+command = "cargo"
+args = ["run"]
+
+[tasks.run-prod]
+dependencies = ["build-prod"]
+command = "cargo"
+args = ["run"]
 
 #server
 [tasks.server-clean]
 command = "cargo"
 args = ["clean"]
-
-[tasks.server-format]
-command = "cargo"
-args = ["fmt", "--", "--emit=files"]
-
-[tasks.server-lint]
-command = "cargo"
-args = ["clippy", "--fix", "--allow-dirty"]
 
 [tasks.server-build]
 command = "cargo"
@@ -28,19 +36,20 @@ args = ["build"]
 command = "cargo"
 args = ["build", "--release"]
 
+[tasks.server-format]
+command = "cargo"
+args = ["fmt", "--", "--emit=files"]
+
+[tasks.server-lint]
+command = "cargo"
+args = ["clippy", "--fix", "--allow-dirty"]
+
 [tasks.server-test]
 dependencies = [
     "server-build"
 ]
 command = "cargo"
 args = ["test"]
-
-[tasks.run]
-dependencies = [
-    "server-build"
-]
-command = "cargo"
-args = ["run"]
 
 #client
 [tasks.client-clean]
@@ -49,16 +58,28 @@ script = [
     "npm run clean"
 ]
 
-[tasks.client-format]
-cwd = "./src/vue-client"
-condition =  { files_modified = {input = ["./**/*"], output = ["../../public/*"]}}
-script = [
-    "npm run format"
-]
-
 [tasks.client-build]
 cwd = "./src/vue-client"
 condition =  { files_modified = {input = ["./**/*"], output = ["../../public/*"]}}
 script = [
     "npm run dev"
+]
+
+[tasks.client-build-prod]
+cwd = "./src/vue-client"
+condition =  { files_modified = {input = ["./**/*"], output = ["../../public/*"]}}
+script = [
+    "npm run build-only"
+]
+
+[tasks.client-format]
+cwd = "./src/vue-client"
+script = [
+    "npm run format"
+]
+
+[tasks.client-lint]
+cwd = "./src/vue-client"
+script = [
+    "npm run type-check && npm run lint"
 ]
