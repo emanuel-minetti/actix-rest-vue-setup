@@ -62,7 +62,6 @@ script = [
 [tasks.client-build]
 cwd = "./src/vue-client"
 condition =  { files_modified = {input = ["./**/*", "./*", "../../*"], output = ["../../public/*"]}}
-dependencies = ["client-clean"]
 script = [
     "npm run dev"
 ]
@@ -70,7 +69,6 @@ script = [
 [tasks.client-build-prod]
 cwd = "./src/vue-client"
 condition =  { files_modified = {input = ["./**/*", "./*", "../../*"], output = ["../../public/*"]}}
-dependencies = ["client-clean"]
 script = [
     "npm run build-only"
 ]
