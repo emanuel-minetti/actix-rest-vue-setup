@@ -90,3 +90,7 @@ cwd = "./src/vue-client"
 script = [
     "npm run test:unit"
 ]
+
+#integrated
+[tasks.e2e-test]
+cwd = "./src/vue-client"
