@@ -1,4 +1,5 @@
 use std::env;
+use std::fs::{File, remove_file};
 use std::process::exit;
 //use actix_rest_vue_setup::run;
 
@@ -11,13 +12,24 @@ async fn main() -> () {
         exit(0);
     }
     match args[1].as_ref() {
-        "start" => {println!("Starting")},
+        "start" => {start()},
         "status" => {println!("Status")},
-        "stop" => {println!("Stopping")},
+        "stop" => {stop()},
         "restart" => {println!("Restarting")},
         _ => print_usage(&args[0])
     }
     //run()?.await
+}
+
+fn start() -> () {
+    println!("Starting");
+    let mut _pid_file = File::create("actix-rest-vue-setup.pid");
+    //let temp_file = temp_dir().push("actix-rest-vue-setup.pid");
+}
+
+fn stop() -> () {
+    println!("Stopping");
+    remove_file("actix-rest-vue-setup.pid").expect("Couldn't remove pid file");
 }
 
 fn print_usage(called: &str) -> () {

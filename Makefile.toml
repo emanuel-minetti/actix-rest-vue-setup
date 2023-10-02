@@ -16,7 +16,7 @@ dependencies = ["server-lint", "client-lint"]
 [tasks.start]
 dependencies = ["build"]
 script = [
-    "cargo run -- start"
+    "cargo run -- stop"
 ]
 
 [tasks.run-prod]
