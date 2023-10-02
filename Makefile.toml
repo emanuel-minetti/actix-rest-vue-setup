@@ -13,10 +13,11 @@ dependencies = ["server-format", "client-format"]
 [tasks.lint]
 dependencies = ["server-lint", "client-lint"]
 
-[tasks.run]
+[tasks.start]
 dependencies = ["build"]
-command = "cargo"
-args = ["run"]
+script = [
+    "cargo run -- start"
+]
 
 [tasks.run-prod]
 dependencies = ["build-prod"]
