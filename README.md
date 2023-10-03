@@ -9,8 +9,8 @@ The boilerplate is not very optioned, so many choices are hardcoded.
 Some steps will be available via [branches]. Further modularization
 isn't planned.
 
-As a CSS framework [Bootstrap](https://getbootstrap.com/) is used.
-The Component testing is done via [Reqwest](https://docs.rs/reqwest/latest/reqwest/) for the API
+[Bootstrap](https://getbootstrap.com/) is used as a CSS framework.
+Component testing is done via [Reqwest](https://docs.rs/reqwest/latest/reqwest/) for the API
 and where needed via Vitest for the client. The whole app is E2E tested
 via [Cypress](https://www.cypress.io/).
  
