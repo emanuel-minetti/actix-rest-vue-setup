@@ -1,7 +1,8 @@
 use std::env;
 use std::fs::{File, remove_file};
+use std::io::Write;
 use std::path::Path;
-use std::process::exit;
+use std::process::{Command, exit, Stdio};
 
 const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
 
@@ -22,7 +23,19 @@ fn main() -> () {
 
 fn start() -> () {
     println!("Starting");
-    let _pid_file = File::create(PID_FILE_PATH);
+    let mut pid_file = File::create(PID_FILE_PATH)
+        .expect("Could not create pid file.");
+    let child = Command::new("cargo")
+        .arg("run")
+        .arg("--bin")
+        .arg("actix-rest-vue-setup-run")
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn()
+        .expect("Failed to run the server.");
+    let pid = child.id().to_string();
+    pid_file.write(pid.as_ref()).expect("Could not write to pid file.");
+    exit(0)
 }
 
 fn stop() -> () {
