@@ -2,14 +2,10 @@ use std::env;
 use std::fs::{File, remove_file};
 use std::path::Path;
 use std::process::exit;
-//use actix_rest_vue_setup::run;
 
 const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
 
-#[tokio::main]
-async fn main() -> () {
-
-//async fn main() -> Result<(), std::io::Error> {
+fn main() -> () {
     let args: Vec<String> = env::args().collect();
     if args.len() == 1 {
         print_usage(&args[0]);
@@ -26,8 +22,7 @@ async fn main() -> () {
 
 fn start() -> () {
     println!("Starting");
-    let mut _pid_file = File::create(PID_FILE_PATH);
-    //run()?.await
+    let _pid_file = File::create(PID_FILE_PATH);
 }
 
 fn stop() -> () {
