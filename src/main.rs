@@ -1,8 +1,9 @@
 use std::env;
-use std::fs::{File, remove_file};
-use std::io::Write;
+use std::fs::{File};
+use std::io::{Read, Write};
 use std::path::Path;
 use std::process::{Command, exit, Stdio};
+use sysinfo::{System, SystemExt, Pid, ProcessExt, RefreshKind};
 
 const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
 
@@ -35,12 +36,25 @@ fn start() -> () {
         .expect("Failed to run the server.");
     let pid = child.id().to_string();
     pid_file.write(pid.as_ref()).expect("Could not write to pid file.");
+    println!("Started pid: {}", pid);
     exit(0)
 }
 
 fn stop() -> () {
     println!("Stopping");
-    remove_file(PID_FILE_PATH).expect("Couldn't remove pid file");
+    let mut pid_file = File::open(PID_FILE_PATH).expect("Failed to open pid file.");
+    let pid_file_content = &mut "".to_string();
+    pid_file.read_to_string(pid_file_content).expect("Failed to read pid file.");
+    let pid = pid_file_content.parse::<usize>()
+        .expect("Pin file content should parse to a number");
+    let binding = System::new_with_specifics(
+        RefreshKind::with_processes(
+            RefreshKind::default(), Default::default()));
+    let pid = Pid::from(pid);
+    let process = binding.process(pid).expect("Pid process should exist.");
+    process.kill();
+    std::fs::remove_file(PID_FILE_PATH).expect("Couldn't remove pid file");
+    println!("Stopped pid: {}", pid);
 }
 
 fn status() -> () {
