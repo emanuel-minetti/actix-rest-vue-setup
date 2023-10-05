@@ -101,7 +101,13 @@ fn restart() {
 }
 
 fn print_usage(called: &str) {
-    println!("Usage: {} (start | status | stop | restart)", called);
+    println!(
+        "Usage: {} (start | status | stop | restart) [options]\n\
+    The only option supported is:\n\
+      \t--force\n\
+      \t\tWhen used with `start` forces a restart even if the server is running.",
+        called
+    );
 }
 
 fn is_running() -> bool {
