@@ -14,26 +14,22 @@ fn main() {
         std::process::exit(0);
     }
     match args.len() {
-        2 => {
-            match args[1].as_ref() {
-                "start" => start(false),
-                "status" => status(),
-                "stop" => stop(),
-                "restart" => restart(),
-                _ => print_usage(&args[0]),
-            }
+        2 => match args[1].as_ref() {
+            "start" => start(false),
+            "status" => status(),
+            "stop" => stop(),
+            "restart" => restart(),
+            _ => print_usage(&args[0]),
         },
         3 => {
             if &args[1] == "start" && &args[2] == "--force" {
                 start(true);
-            }
-            else {
+            } else {
                 print_usage(&args[0])
             }
-        },
-        _ => print_usage(&args[0])
+        }
+        _ => print_usage(&args[0]),
     }
-
 }
 
 fn start(forced: bool) {
