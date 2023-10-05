@@ -17,7 +17,7 @@ fn main() -> () {
         "start" => {start()},
         "status" => {status()},
         "stop" => {stop()},
-        "restart" => {println!("Restarting")},
+        "restart" => {restart()},
         _ => print_usage(&args[0])
     }
 }
@@ -67,6 +67,16 @@ fn stop() -> () {
 
 fn status() -> () {
     println!("Status: {}", if is_running() {"Running"} else {"Stopped"});
+}
+
+fn restart() -> () {
+    println!("Restarting");
+    if !is_running() {
+        println!("Seems not to be running. Consider starting.");
+        std::process::exit(0)
+    }
+    stop();
+    start();
 }
 
 fn print_usage(called: &str) -> () {
