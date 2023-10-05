@@ -13,17 +13,34 @@ fn main() {
         print_usage(&args[0]);
         std::process::exit(0);
     }
-    match args[1].as_ref() {
-        "start" => start(),
-        "status" => status(),
-        "stop" => stop(),
-        "restart" => restart(),
-        _ => print_usage(&args[0]),
+    match args.len() {
+        2 => {
+            match args[1].as_ref() {
+                "start" => start(false),
+                "status" => status(),
+                "stop" => stop(),
+                "restart" => restart(),
+                _ => print_usage(&args[0]),
+            }
+        },
+        3 => {
+            if &args[1] == "start" && &args[2] == "--force" {
+                start(true);
+            }
+            else {
+                print_usage(&args[0])
+            }
+        },
+        _ => print_usage(&args[0])
     }
+
 }
 
-fn start() {
+fn start(forced: bool) {
     println!("Starting");
+    if forced {
+        stop();
+    }
     if is_running() {
         println!("Seems to be running. Consider stopping.");
         std::process::exit(0)
@@ -84,7 +101,7 @@ fn restart() {
         std::process::exit(0)
     }
     stop();
-    start();
+    start(false);
 }
 
 fn print_usage(called: &str) {
