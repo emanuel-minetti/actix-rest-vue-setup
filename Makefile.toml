@@ -13,15 +13,16 @@ dependencies = ["server-format", "client-format"]
 [tasks.lint]
 dependencies = ["server-lint", "client-lint"]
 
-[tasks.run]
+[tasks.start]
 dependencies = ["build"]
-command = "cargo"
-args = ["run"]
+script = [
+    "cargo run --bin actix-rest-vue-setup-main -- start"
+]
 
-[tasks.run-prod]
-dependencies = ["build-prod"]
-command = "cargo"
-args = ["run"]
+#[tasks.run-prod]
+#dependencies = ["build-prod"]
+#command = "cargo"
+#args = ["run"]
 
 [tasks.test]
 dependencies = ["server-test", "client-test"]
