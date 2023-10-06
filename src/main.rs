@@ -9,11 +9,8 @@ const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args.len() == 1 {
-        print_usage(&args[0]);
-        std::process::exit(0);
-    }
     match args.len() {
+        1 => print_usage(&args[0]),
         2 => match args[1].as_ref() {
             "start" => start(false),
             "status" => status(),
