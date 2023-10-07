@@ -22,13 +22,14 @@ script = [
 [tasks.stop]
 alias = "server-stop"
 
-#[tasks.run-prod]
-#dependencies = ["build-prod"]
-#command = "cargo"
-#args = ["run"]
-
 [tasks.test]
 dependencies = ["server-test", "client-test", "e2e-test"]
+
+[tasks.run-prod]
+dependencies = ["server-stop", "build-prod"]
+script = [
+    "cargo run --bin actix-rest-vue-setup-main -- start"
+]
 
 #server
 [tasks.server-clean]
