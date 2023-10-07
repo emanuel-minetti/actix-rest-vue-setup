@@ -13,11 +13,14 @@ dependencies = ["server-format", "client-format"]
 [tasks.lint]
 dependencies = ["server-lint", "client-lint"]
 
-[tasks.start]
-dependencies = ["build"]
+[tasks.run]
+dependencies = ["server-stop", "build"]
 script = [
     "cargo run --bin actix-rest-vue-setup-main -- start"
 ]
+
+[tasks.stop]
+dependencies = ["server-stop"]
 
 #[tasks.run-prod]
 #dependencies = ["build-prod"]
@@ -52,6 +55,11 @@ args = ["clippy", "--fix", "--allow-dirty"]
 dependencies = ["server-format", "server-lint"]
 command = "cargo"
 args = ["test"]
+
+[tasks.server-stop]
+script = [
+    "cargo run --bin actix-rest-vue-setup-main -- stop --force"
+]
 
 #client
 [tasks.client-clean]
