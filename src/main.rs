@@ -20,13 +20,12 @@ fn main() {
             _ => print_usage(&args[0]),
         },
         3 => {
-                if &args[2] == "--force" {
-                    match args[1].as_ref() {
-                        "start" => start(true),
-                        "stop" => stop(true),
-                        _ => print_usage(&args[0]),
-                    }
-
+            if &args[2] == "--force" {
+                match args[1].as_ref() {
+                    "start" => start(true),
+                    "stop" => stop(true),
+                    _ => print_usage(&args[0]),
+                }
             } else {
                 print_usage(&args[0])
             }
@@ -94,20 +93,17 @@ fn stop(forced: bool) {
                 println!("Stopped pid: {}", pid);
             }
         }
-    }
-    else {
-        if is_running() {
-            stop(false)
-        } else {
-            let system_binding = System::new_with_specifics(RefreshKind::with_processes(
-                RefreshKind::default(),
-                Default::default(),
-            ));
-            let processes = system_binding.processes_by_name(PROCESS_NAME);
-            processes.for_each(|process| -> () {
-                process.kill();
-            })
-        }
+    } else if is_running() {
+        stop(false)
+    } else {
+        let system_binding = System::new_with_specifics(RefreshKind::with_processes(
+            RefreshKind::default(),
+            Default::default(),
+        ));
+        let processes = system_binding.processes_by_name(PROCESS_NAME);
+        processes.for_each(|process| {
+            process.kill();
+        })
     }
 }
 

@@ -20,7 +20,7 @@ script = [
 ]
 
 [tasks.stop]
-dependencies = ["server-stop"]
+alias = "server-stop"
 
 #[tasks.run-prod]
 #dependencies = ["build-prod"]
@@ -28,7 +28,7 @@ dependencies = ["server-stop"]
 #args = ["run"]
 
 [tasks.test]
-dependencies = ["server-test", "client-test"]
+dependencies = ["server-test", "client-test", "e2e-test"]
 
 #server
 [tasks.server-clean]
@@ -52,7 +52,7 @@ command = "cargo"
 args = ["clippy", "--fix", "--allow-dirty"]
 
 [tasks.server-test]
-dependencies = ["server-format", "server-lint"]
+dependencies = ["server-stop", "server-format", "server-lint", "server-build"]
 command = "cargo"
 args = ["test"]
 
@@ -96,10 +96,23 @@ script = [
 
 [tasks.client-test]
 cwd = "./src/vue-client"
+dependencies = ["client-build"]
 script = [
     "npm run test:unit"
 ]
 
 #integrated
 [tasks.e2e-test]
+dependencies = ["stop", "build", "e2e-run", "e2e-test-only", "e2e-stop"]
+
+[tasks.e2e-run]
+alias = "run"
+
+[tasks.e2e-test-only]
 cwd = "./src/vue-client"
+script = [
+    "npm run test:e2e"
+]
+
+[tasks.e2e-stop]
+alias = "stop"
