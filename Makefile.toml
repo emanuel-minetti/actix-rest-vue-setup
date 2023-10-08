@@ -23,6 +23,7 @@ script = [
 alias = "server-stop"
 
 [tasks.test]
+clear = true
 dependencies = ["server-test", "client-test", "e2e-test"]
 
 [tasks.run-prod]
@@ -95,10 +96,9 @@ script = [
     "npm run type-check && npm run lint"
 ]
 
-#TODO shoud format and lint
 [tasks.client-test]
 cwd = "./src/vue-client"
-dependencies = ["client-build"]
+dependencies = ["client-format", "client-lint", "client-build"]
 script = [
     "npm run test:unit"
 ]
