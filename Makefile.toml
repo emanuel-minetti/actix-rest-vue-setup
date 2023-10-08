@@ -95,6 +95,7 @@ script = [
     "npm run type-check && npm run lint"
 ]
 
+#TODO shoud format and lint
 [tasks.client-test]
 cwd = "./src/vue-client"
 dependencies = ["client-build"]
