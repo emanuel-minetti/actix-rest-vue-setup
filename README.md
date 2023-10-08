@@ -14,6 +14,9 @@ via [Cypress](https://www.cypress.io/).
 Building is done via [Cargo-Make](https://docs.rs/crate/cargo-make/latest)
 (and of course cargo and npm).
 
+Some steps will be available via [branches]. Further modularization
+isn't planned.
+
 CI will be done via [Docker](https://www.docker.com/)
 and [GitHubActions](https://github.com/features/actions). 
 
@@ -23,8 +26,4 @@ and implementing a login API and page using a
 authentication we'll be using [JWT](https://jwt.io/).
 
 ## TODO
-- Add more tests for exposed routes
-- Add CI (probably using `cargo-make`. We'll want testing,
-building and preparing commit in one place)
-- Add Login and restrict side and API access
-- Improve health check for DB connection and FS access.
+See [TODO](./TODO.md)
