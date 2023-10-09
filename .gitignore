@@ -1,1 +1,3 @@
 /target
+/public
+/actix-rest-vue-setup.pid

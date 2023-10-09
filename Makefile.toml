@@ -1,0 +1,128 @@
+[tasks.clean]
+clear = true
+dependencies = ["server-clean", "client-clean"]
+
+[tasks.build]
+clear = true
+dependencies = ["server-build", "client-build"]
+
+[tasks.build-prod]
+clear = true
+dependencies = ["server-build-prod", "client-build-prod"]
+
+[tasks.format]
+clear = true
+dependencies = ["server-format", "client-format"]
+
+[tasks.lint]
+clear = true
+dependencies = ["server-lint", "client-lint"]
+
+[tasks.run]
+clear = true
+dependencies = ["server-stop", "build"]
+script = [
+    "cargo run --bin actix-rest-vue-setup-main -- start"
+]
+
+[tasks.stop]
+clear = true
+alias = "server-stop"
+
+[tasks.test]
+clear = true
+dependencies = ["server-test", "client-test", "e2e-test"]
+
+[tasks.run-prod]
+clear = true
+dependencies = ["server-stop", "build-prod"]
+script = [
+    "cargo run --bin actix-rest-vue-setup-main -- start"
+]
+
+#server
+[tasks.server-clean]
+command = "cargo"
+args = ["clean"]
+
+[tasks.server-build]
+command = "cargo"
+args = ["build"]
+
+[tasks.server-build-prod]
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.server-format]
+command = "cargo"
+args = ["fmt", "--", "--emit=files"]
+
+[tasks.server-lint]
+command = "cargo"
+args = ["clippy", "--fix", "--allow-dirty"]
+
+[tasks.server-test]
+dependencies = ["server-stop", "server-format", "server-lint", "server-build"]
+command = "cargo"
+args = ["test"]
+
+[tasks.server-stop]
+script = [
+    "cargo run --bin actix-rest-vue-setup-main -- stop --force"
+]
+
+#client
+[tasks.client-clean]
+cwd = "./src/vue-client"
+script = [
+    "npm run clean"
+]
+
+[tasks.client-build]
+cwd = "./src/vue-client"
+condition =  { files_modified = {input = ["./**/*", "./*", "../../*"], output = ["../../public/*"]}}
+script = [
+    "npm run dev"
+]
+
+[tasks.client-build-prod]
+cwd = "./src/vue-client"
+condition =  { files_modified = {input = ["./**/*", "./*", "../../*"], output = ["../../public/*"]}}
+script = [
+    "npm run build-only"
+]
+
+[tasks.client-format]
+cwd = "./src/vue-client"
+script = [
+    "npm run format"
+]
+
+[tasks.client-lint]
+cwd = "./src/vue-client"
+script = [
+    "npm run type-check && npm run lint"
+]
+
+[tasks.client-test]
+cwd = "./src/vue-client"
+dependencies = ["client-format", "client-lint", "client-build"]
+script = [
+    "npm run test:unit"
+]
+
+#integrated
+[tasks.e2e-test]
+dependencies = ["stop", "build", "e2e-run", "e2e-test-only", "e2e-stop"]
+
+[tasks.e2e-run]
+alias = "run"
+
+[tasks.e2e-test-only]
+cwd = "./src/vue-client"
+script = [
+    "npm run test:e2e"
+]
+
+[tasks.e2e-stop]
+alias = "stop"

@@ -1,4 +1,4 @@
 mod routes;
-mod startup;
+pub mod startup;
 
 pub use startup::run;

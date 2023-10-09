@@ -11,7 +11,13 @@ The Component testing is done via [Reqwest](https://docs.rs/reqwest/latest/reqwe
 and where needed via Vitest for the client. The whole app is E2E tested
 via [Cypress](https://www.cypress.io/).
  
-Next we'll add build scripts via [Cargo-Make](https://docs.rs/crate/cargo-make/latest)  and CI via [Docker](https://www.docker.com/)
+Building is done via [Cargo-Make](https://docs.rs/crate/cargo-make/latest)
+(and of course cargo and npm).
+
+Some steps will be available via [branches]. Further modularization
+isn't planned.
+
+CI will be done via [Docker](https://www.docker.com/)
 and [GitHubActions](https://github.com/features/actions). 
 
 Next steps will be adding internationalisation (via [vue-i18n](https://vue-i18n.intlify.dev/))
@@ -19,13 +25,5 @@ and implementing a login API and page using a
 [Postgresql](https://www.postgresql.org/) DB as the backend. For further
 authentication we'll be using [JWT](https://jwt.io/).
 
-Some steps will be available via [branches]. Further modularization
-isn't planned.
-
 ## TODO
-- Add more tests for exposed routes
-- Add CI (probably using `cargo-make`. We'll want testing,
-building and preparing commit in one place)
-- Add *real* E2E tests (client browser tests)
-- Add Login and restrict side and API access
-- Improve health check for DB connection and FS access.
+See [TODO](./TODO.md)
