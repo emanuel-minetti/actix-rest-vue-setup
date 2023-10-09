@@ -60,8 +60,8 @@ pub fn start(forced: bool) {
 }
 
 pub fn stop(forced: bool) {
-    println!("Stopping");
     if !forced {
+        println!("Stopping");
         if !is_running() {
             println!("Seems to be not running. Try starting.");
             std::process::exit(0)
@@ -92,17 +92,21 @@ pub fn stop(forced: bool) {
                 println!("Stopped pid: {}", pid);
             }
         }
-    } else if is_running() {
-        stop(false)
     } else {
-        let system_binding = System::new_with_specifics(RefreshKind::with_processes(
-            RefreshKind::default(),
-            Default::default(),
-        ));
-        let processes = system_binding.processes_by_name(PROCESS_NAME);
-        processes.for_each(|process| {
-            process.kill();
-        })
+        println!("Force stopping");
+        if is_running() {
+            stop(false)
+        } else {
+            let system_binding = System::new_with_specifics(RefreshKind::with_processes(
+                RefreshKind::default(),
+                Default::default(),
+            ));
+            let processes = system_binding.processes_by_name(PROCESS_NAME);
+            processes.for_each(|process| {
+                process.kill();
+                println!("Stopped {} with pid: {}", process.name(), process.pid());
+            })
+        }
     }
 }
 
@@ -128,7 +132,8 @@ pub fn print_usage(called: &str) {
         "Usage: {} (start | status | stop | restart) [options]\n\
     The only option supported is:\n\
       \t--force\n\
-      \t\tWhen used with `start` forces a restart even if the server is running.",
+      \t\tWhen used with `start` forces a restart even if the server is running.
+      \t\tWhen used with `stops` forces a stop. If pid file is missing, kills all running instances.",
         called
     );
 }
