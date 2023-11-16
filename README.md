@@ -1,7 +1,7 @@
 # Actix SPA boilerplate
 
 A boilerplate for an SPA (Singe Page Application) web app using [Actix](https://actix.rs/).
-It uses Actix for serving a REST API as well as the [Vue](https://vuejs.org/)
+It uses Actix for serving a REST API as well as a [Vue](https://vuejs.org/)
 client. (This may not be the optimal setup, but it keeps everything
 nicely in place (and in *one* repository :grinning:)).
 As a CSS framework [Bootstrap](https://getbootstrap.com/) is used.
