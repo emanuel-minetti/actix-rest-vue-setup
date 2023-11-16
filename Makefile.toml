@@ -18,6 +18,10 @@ dependencies = ["server-format", "client-format"]
 clear = true
 dependencies = ["server-lint", "client-lint"]
 
+[tasks.audit]
+clear = true
+dependencies = ["server-audit", "client-audit"]
+
 [tasks.run]
 clear = true
 dependencies = ["server-stop", "build"]
@@ -60,6 +64,10 @@ args = ["fmt", "--", "--emit=files"]
 [tasks.server-lint]
 command = "cargo"
 args = ["clippy", "--fix", "--allow-dirty"]
+
+[tasks.server-audit]
+command = "cargo"
+args = ["audit"]
 
 [tasks.server-test]
 dependencies = ["server-stop", "server-format", "server-lint", "server-build"]
@@ -109,6 +117,12 @@ cwd = "./src/vue-client"
 dependencies = ["client-format", "client-lint", "client-build"]
 script = [
     "npm run test:unit"
+]
+
+[tasks.client-audit]
+cwd = "./src/vue-client"
+script = [
+    "npm audit"
 ]
 
 #integrated
