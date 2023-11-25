@@ -22,6 +22,10 @@ dependencies = ["server-lint", "client-lint"]
 clear = true
 dependencies = ["server-audit", "client-audit"]
 
+[tasks.update]
+clear = true
+dependencies = ["server-update", "client-update"]
+
 [tasks.run]
 clear = true
 dependencies = ["server-stop", "build"]
@@ -35,7 +39,7 @@ alias = "server-stop"
 
 [tasks.test]
 clear = true
-dependencies = ["server-test", "client-test", "e2e-test"]
+dependencies = ["audit", "server-test", "client-test", "e2e-test"]
 
 [tasks.run-prod]
 clear = true
@@ -68,6 +72,10 @@ args = ["clippy", "--fix", "--allow-dirty"]
 [tasks.server-audit]
 command = "cargo"
 args = ["audit"]
+
+[tasks.server-update]
+command = "cargo"
+args = ["update"]
 
 [tasks.server-test]
 dependencies = ["server-stop", "server-format", "server-lint", "server-build"]
@@ -123,6 +131,12 @@ script = [
 cwd = "./src/vue-client"
 script = [
     "npm audit"
+]
+
+[tasks.client-update]
+cwd = "./src/vue-client"
+script = [
+    "npm update"
 ]
 
 #integrated
