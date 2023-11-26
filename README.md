@@ -12,7 +12,7 @@ and where needed via Vitest for the client. The whole app is E2E tested
 via [Cypress](https://www.cypress.io/).
  
 Building is done via [Cargo-Make](https://docs.rs/crate/cargo-make/latest)
-(and of course cargo and npm).
+(and of course cargo, npm and [vite](https://vitejs.dev/)).
 
 Some steps will be available via [branches]. Further modularization
 isn't planned.
