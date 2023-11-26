@@ -26,6 +26,10 @@ dependencies = ["server-audit", "client-audit"]
 clear = true
 dependencies = ["server-update", "client-update"]
 
+[tasks.install]
+clear = true
+dependencies = ["client-install", "server-build"]
+
 [tasks.run]
 clear = true
 dependencies = ["server-stop", "build"]
@@ -137,6 +141,12 @@ script = [
 cwd = "./src/vue-client"
 script = [
     "npm update"
+]
+
+[tasks.client-install]
+cwd = "./src/vue-client"
+script = [
+    "npm install"
 ]
 
 #integrated

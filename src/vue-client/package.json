@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "clean": "rm -rf ../../public/* && rm -rf ./node_modules/*",
+    "clean": "rm -rf ../../public/* && rm -rf ./node_modules/.bin && rm -f ./node_modules/.package-lock.json",
     "dev": "vite build  --emptyOutDir -m development",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
