@@ -1,5 +1,4 @@
 - Installing and updating cargo and npm via cargo-make.
-- Check for updates of dependencies while testing.
 - Add CI (using `cargo-make` and GitHub Actions.
   We'll want installing and testing,
   in one place to prepare a commit.)

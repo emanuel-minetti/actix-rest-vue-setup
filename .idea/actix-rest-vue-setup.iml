@@ -8,6 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vue-client/cypress/screenshots" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/public" />
+      <excludeFolder url="file://$MODULE_DIR$/.cargo/advisory-db" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

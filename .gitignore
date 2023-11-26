@@ -1,3 +1,7 @@
 /target
 /public
 /actix-rest-vue-setup.pid
+/.cargo/advisory-db/
+/.cargo/advisory-db..lock
+/.cargo/advisory-db.lock
+/.cargo/audit.toml
