@@ -28,7 +28,7 @@ dependencies = ["server-update", "client-update"]
 
 [tasks.install]
 clear = true
-dependencies = ["client-install", "server-build"]
+dependencies = ["client-install", "client-build", "server-build"]
 
 [tasks.run]
 clear = true
