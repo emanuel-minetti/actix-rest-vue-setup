@@ -18,3 +18,7 @@ jobs:
         with:
           components: rustfmt, clippy
       - run: cargo install --force cargo-make
+      - name: Install App
+        run: cargo make install
+      - name: Test App
+        run: cargo make test
