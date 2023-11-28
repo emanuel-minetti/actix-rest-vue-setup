@@ -82,7 +82,7 @@ async fn random_url_routes_to_index() {
                 response
                     .text()
                     .await
-                    .expect("Failed to get request  body")
+                    .expect("Failed to get request body")
                     .as_str()
             )
             .collect::<Vec<_>>()
