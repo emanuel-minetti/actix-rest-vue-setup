@@ -102,10 +102,7 @@ pub fn get_index_matching_reg_ex() -> Regex {
  {2}</head>$
  {2}<body>$
  {4}<div id="app"></div>$
- {4}<!--suppress HtmlUnknownTarget -->$
- \s*$
- {2}</body>$
-</html>$"#,
+ {4}<!--suppress HtmlUnknownTarget -->$"#,
     )
     .unwrap()
 }
