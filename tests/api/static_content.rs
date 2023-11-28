@@ -104,7 +104,7 @@ pub fn get_index_matching_reg_ex() -> Regex {
  {4}<div id="app"></div>$
  {4}<!--suppress HtmlUnknownTarget -->$"#,
     )
-    .unwrap()
+    .expect("Could not parse RegEx.")
 }
 
 fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
