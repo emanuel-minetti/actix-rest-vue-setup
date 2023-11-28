@@ -90,23 +90,22 @@ async fn random_url_routes_to_index() {
 
 pub fn get_index_matching_reg_ex() -> Regex {
     Regex::new(
-        r#"<!DOCTYPE html>\s
-<html lang="en">\s
- {2}<head>\s
- {4}<meta charset="UTF-8">\s
- {4}<link rel="icon" href="/favicon\.ico">\s
- {4}<meta name="viewport" content="width=device-width, initial-scale=1\.0">\s
- {4}<title>Vite App</title>\s
- {4}<script type="module" crossorigin src="/assets/index-[0-9a-f]+\.js"></script>\s
- {4}<link rel="stylesheet" href="/assets/index-[0-9a-f]+\.css">\s
- {2}</head>\s
- {2}<body>\s
- {4}<div id="app"></div>\s
- {4}<!--suppress HtmlUnknownTarget -->\s
- {4}\s
- {2}</body>\s
-</html>\s
-"#,
+        r#"(?m)<!DOCTYPE html>$
+<html lang="en">$
+ {2}<head>$
+ {4}<meta charset="UTF-8">$
+ {4}<link rel="icon" href="/favicon\.ico">$
+ {4}<meta name="viewport" content="width=device-width, initial-scale=1\.0">$
+ {4}<title>Vite App</title>$
+ {4}<script type="module" crossorigin src="/assets/index-[0-9a-f]+\.js"></script>$
+ {4}<link rel="stylesheet" href="/assets/index-[0-9a-f]+\.css">$
+ {2}</head>$
+ {2}<body>$
+ {4}<div id="app"></div>$
+ {4}<!--suppress HtmlUnknownTarget -->$
+ \s*$
+ {2}</body>$
+</html>$"#,
     )
     .unwrap()
 }
