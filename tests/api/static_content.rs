@@ -90,7 +90,12 @@ async fn random_url_routes_to_index() {
 }
 
 pub fn get_index_matching_reg_ex() -> Regex {
-    Regex::new(r"(?m)<!DOCTYPE html>\r?$").expect("Could not parse RegEx.")
+    Regex::new(
+        r#"(?m)^<!DOCTYPE html>\r?$
+^<html lang="en">\r?$
+"#,
+    )
+    .expect("Could not parse RegEx.")
 }
 
 fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
