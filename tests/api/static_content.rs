@@ -78,7 +78,8 @@ async fn random_url_routes_to_index() {
         //Assert
         assert!(response.status().is_success());
         let response_text = response.text().await.expect("Failed to get request body");
-        //println!("Response:\n{}", response_text.as_str());
+        println!("Response:\n{}", response_text.as_str());
+        println!("RegEx:\n{}", dbg!(&re));
         assert_eq!(
             re.captures_iter(response_text.as_str())
                 .collect::<Vec<_>>()
