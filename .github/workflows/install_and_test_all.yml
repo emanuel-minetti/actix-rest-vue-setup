@@ -1,7 +1,7 @@
 name: Install and test all
 on:
   push:
-    branches: [ $default-branch, adding_gh_actions ]
+    branches: [ $default-branch ]
   pull_request:
     types: [ opened, synchronize, reopened ]
     branches: [ $default-branch ]

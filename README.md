@@ -17,12 +17,11 @@ Building is done via [Cargo-Make](https://docs.rs/crate/cargo-make/latest)
 Some steps will be available via [branches]. Further modularization
 isn't planned.
 
-CI will be done via [Docker](https://www.docker.com/)
-and [GitHubActions](https://github.com/features/actions). 
+CI is done via [GitHubActions](https://github.com/features/actions). 
 
 Next steps will be adding internationalisation (via [vue-i18n](https://vue-i18n.intlify.dev/))
 and implementing a login API and page using a
-[Postgresql](https://www.postgresql.org/) DB as the backend. For further
+[Postgresql](https://www.postgresql.org/) DB as a backend. For further
 authentication we'll be using [JWT](https://jwt.io/).
 
 ## TODO
