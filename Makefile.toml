@@ -43,7 +43,7 @@ alias = "server-stop"
 
 [tasks.test]
 clear = true
-dependencies = ["audit", "server-stop", "server-test", "client-test", "e2e-test"]
+dependencies = ["audit", "server-test", "client-test", "e2e-test"]
 
 [tasks.run-prod]
 clear = true
