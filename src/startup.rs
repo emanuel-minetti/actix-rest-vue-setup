@@ -4,6 +4,7 @@ use actix_web::dev::Server;
 use actix_web::{web, App, HttpResponse, HttpServer};
 use std::fs::File;
 use std::io::{Read, Write};
+use std::net::TcpListener;
 use std::path::Path;
 use std::process::{Command, Stdio};
 use sysinfo::{Pid, ProcessExt, RefreshKind, System, SystemExt};
@@ -11,7 +12,7 @@ use sysinfo::{Pid, ProcessExt, RefreshKind, System, SystemExt};
 const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
 const PROCESS_NAME: &str = "actix-rest-vue-setup-run";
 
-pub fn run() -> Result<Server, std::io::Error> {
+pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
     let server = HttpServer::new(|| {
         App::new()
             .service(
@@ -28,7 +29,7 @@ pub fn run() -> Result<Server, std::io::Error> {
                     .route("/", web::get().to(routes::return_index)),
             )
     })
-    .bind(("127.0.0.1", 8080))?
+    .listen(listener)?
     .run();
     Ok(server)
 }

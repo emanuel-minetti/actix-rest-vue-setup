@@ -3,11 +3,11 @@ use crate::helpers::spawn_app;
 #[tokio::test]
 async fn health_check_works() {
     // Arrange
-    spawn_app().await;
+    let address = spawn_app();
     let client = reqwest::Client::new();
     // Act
     let response = client
-        .get("http://127.0.0.1:8080/api/health_check")
+        .get(&format!("{}/api/health_check", &address))
         .send()
         .await
         .expect("Failed to execute request.");
