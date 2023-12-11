@@ -98,7 +98,7 @@ async fn url_root_routes_to_index() {
 //
 pub fn get_index_matching_reg_ex() -> Regex {
     Regex::new(
-        r#"(?m)<!DOCTYPE html>\r?$
+        r#"(?m)^<!DOCTYPE html>\r?$
 "#,
     )
     .expect("Could not parse RegEx.")

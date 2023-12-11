@@ -1,5 +1,5 @@
-use std::net::TcpListener;
 use actix_rest_vue_setup::run;
+use std::net::TcpListener;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
