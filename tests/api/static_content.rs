@@ -1,12 +1,11 @@
 //use std::fmt::format;
 // use crate::helpers::spawn_app;
 // use rand::Rng;
+use crate::helpers::spawn_app;
 use regex::Regex;
 use std::fs::File;
 use std::io::{BufReader, Read};
-use crate::helpers::spawn_app;
 
-//
 #[tokio::test]
 async fn favicon_works() {
     // Arrange
