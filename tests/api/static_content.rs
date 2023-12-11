@@ -20,7 +20,6 @@ async fn favicon_works() {
         .expect("Should be able to read 'favicon.ico'");
     // Act
     let response = client
-        //.get("http://127.0.0.1:8080/favicon.ico")
         .get(&format!("{}/favicon.ico", address))
         .send()
         .await
@@ -31,11 +30,11 @@ async fn favicon_works() {
     let response_buffer = response_bytes.expect("Should be able to open response answer");
     assert_eq!(file_buffer, response_buffer);
 }
-//
+
 // #[tokio::test]
 // async fn url_root_routes_to_index() {
 //     // Arrange
-//     spawn_app().await;
+//     let address = spawn_app();
 //     let client = reqwest::Client::new();
 //     let re = get_index_matching_reg_ex();
 //     // Act
