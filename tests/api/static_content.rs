@@ -1,5 +1,5 @@
-use rand::Rng;
 use crate::helpers::spawn_app;
+use rand::Rng;
 use regex::Regex;
 use std::fs::File;
 use std::io::{BufReader, Read};
@@ -96,6 +96,17 @@ async fn random_url_routes_to_index() {
 pub fn get_index_matching_reg_ex() -> Regex {
     Regex::new(
         r#"(?m)^<!DOCTYPE html>\r?$
+^<html lang="en">\r?$
+^ {2}<head>\r?$
+^ {4}<meta charset="UTF-8">r?$
+^ {4}<link rel="icon" href="/favicon.ico">r?$
+^ {4}<meta name="viewport" content="width=device-width, initial-scale=1.0">r?$
+^ {4}<title>Vite App</title>r?$
+^ {4}<script type="module" crossorigin src="/assets/index-ZbLsndBn.js"></script>r?$
+^ {4}<link rel="stylesheet" crossorigin href="/assets/index-_UhkT5Y8.css">r?$
+^ {2}</head>r?$
+^ {2}<body>r?$
+^ {4}<div id="app"></div>r?$
 "#,
     )
     .expect("Could not parse RegEx.")
