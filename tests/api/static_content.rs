@@ -78,16 +78,15 @@ async fn random_url_routes_to_index() {
             .expect("Failed to execute request.");
         //Assert
         assert!(response.status().is_success());
-        assert_eq!(
-            re.captures_iter(
-                response
-                    .text()
-                    .await
-                    .expect("Failed to get request body")
-                    .as_str()
-            )
-            .collect::<Vec<_>>()
-            .len(),
+        let response =
+            response
+                .text()
+                .await
+                .expect("Failed to get request body")
+                .as_str().to_owned();
+        dbg!(&response);
+        let matches = re.captures_iter(&response).collect::<Vec<_>>();
+        assert_eq!(matches.len(),
             1
         );
     }
@@ -98,6 +97,11 @@ pub fn get_index_matching_reg_ex() -> Regex {
         r#"(?m)^<!DOCTYPE html>\r?$
 ^<html lang="en">\r?$
 ^ {2}<head>\r?$
+^ {4}<meta charset="UTF-8">\r?$
+^ {4}<link rel="icon" href="/favicon\.ico">\r?$
+^ {4}<meta name="viewport" content="width=device-width, initial-scale=1\.0">\r?$
+^ {4}<title>Vite App</title>\r?$
+^ {4}<script type="module" crossorigin src="/assets/index-[0-9a-f]+\.js"></script>\r?$
 "#,
     )
     .expect("Could not parse RegEx.")
