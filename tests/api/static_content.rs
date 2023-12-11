@@ -1,6 +1,7 @@
+//use std::fmt::format;
 // use crate::helpers::spawn_app;
 // use rand::Rng;
-// use regex::Regex;
+use regex::Regex;
 use std::fs::File;
 use std::io::{BufReader, Read};
 use crate::helpers::spawn_app;
@@ -31,37 +32,38 @@ async fn favicon_works() {
     assert_eq!(file_buffer, response_buffer);
 }
 
-// #[tokio::test]
-// async fn url_root_routes_to_index() {
-//     // Arrange
-//     let address = spawn_app();
-//     let client = reqwest::Client::new();
-//     let re = get_index_matching_reg_ex();
-//     // Act
-//     let urls = vec!["", "/"];
-//     for url in urls {
-//         let response = client
-//             .get("http://127.0.0.1:8080".to_owned() + url)
-//             .send()
-//             .await
-//             .expect("Failed to execute request.");
-//         //Assert
-//         assert!(response.status().is_success());
-//         assert_eq!(
-//             re.captures_iter(
-//                 response
-//                     .text()
-//                     .await
-//                     .expect("Failed to get request body")
-//                     .as_str()
-//             )
-//             .collect::<Vec<_>>()
-//             .len(),
-//             1
-//         );
-//     }
-// }
-//
+#[tokio::test]
+async fn url_root_routes_to_index() {
+    // Arrange
+    let address = spawn_app();
+    let client = reqwest::Client::new();
+    let re = get_index_matching_reg_ex();
+    // Act
+    let urls = vec!["", "/"];
+    for url in urls {
+        let response = client
+            //.get("http://127.0.0.1:8080".to_owned() + url)
+            .get(address.to_owned() + url)
+            .send()
+            .await
+            .expect("Failed to execute request.");
+        //Assert
+        assert!(response.status().is_success());
+        assert_eq!(
+            re.captures_iter(
+                response
+                    .text()
+                    .await
+                    .expect("Failed to get request body")
+                    .as_str()
+            )
+            .collect::<Vec<_>>()
+            .len(),
+            1
+        );
+    }
+}
+
 // #[tokio::test]
 // async fn random_url_routes_to_index() {
 //     // Arrange
@@ -94,29 +96,29 @@ async fn favicon_works() {
 //     }
 // }
 //
-// pub fn get_index_matching_reg_ex() -> Regex {
-//     Regex::new(
-//         r#"(?m)^<!DOCTYPE html>\r?$
-// ^<html lang="en">\r?$
-// ^ {2}<head>\r?$
-// ^ {4}<meta charset="UTF-8">\r?$
-// ^ {4}<link rel="icon" href="/favicon\.ico">\r?$
-// ^ {4}<meta name="viewport" content="width=device-width, initial-scale=1\.0">\r?$
-// ^ {4}<title>Vite App</title>\r?$
-// ^ {4}<script type="module" crossorigin src="/assets/index-[0-9a-f]+\.js"></script>\r?$
-// ^ {4}<link rel="stylesheet" href="/assets/index-[0-9a-f]+\.css">\r?$
-// ^ {2}</head>\r?$
-// ^ {2}<body>\r?$
-// ^ {4}<div id="app"></div>\r?$
-// ^ {4}<!--suppress HtmlUnknownTarget -->\r?$
-// ^ {4}\r?$
-// ^ {2}</body>\r?$
-// ^</html>\r?$
-// "#,
-//     )
-//     .expect("Could not parse RegEx.")
-// }
-//
+pub fn get_index_matching_reg_ex() -> Regex {
+    Regex::new(
+        r#"(?m)^<!DOCTYPE html>\r?$
+^<html lang="en">\r?$
+^ {2}<head>\r?$
+^ {4}<meta charset="UTF-8">\r?$
+^ {4}<link rel="icon" href="/favicon\.ico">\r?$
+^ {4}<meta name="viewport" content="width=device-width, initial-scale=1\.0">\r?$
+^ {4}<title>Vite App</title>\r?$
+^ {4}<script type="module" crossorigin src="/assets/index-[0-9a-f]+\.js"></script>\r?$
+^ {4}<link rel="stylesheet" href="/assets/index-[0-9a-f]+\.css">\r?$
+^ {2}</head>\r?$
+^ {2}<body>\r?$
+^ {4}<div id="app"></div>\r?$
+^ {4}<!--suppress HtmlUnknownTarget -->\r?$
+^ {4}\r?$
+^ {2}</body>\r?$
+^</html>\r?$
+"#,
+    )
+    .expect("Could not parse RegEx.")
+}
+
 // fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
 //     let mut res = Vec::new();
 //     while res.len() < size {
