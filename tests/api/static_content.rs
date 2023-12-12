@@ -101,7 +101,14 @@ pub fn get_index_matching_reg_ex() -> Regex {
 ^ {4}<link rel="icon" href="/favicon\.ico">\r?$
 ^ {4}<meta name="viewport" content="width=device-width, initial-scale=1\.0">\r?$
 ^ {4}<title>Vite App</title>\r?$
-^ {4}<script type="module" crossorigin src="/assets/index-[0-9a-f]+\.js"></script>\r?$
+^ {4}<script type="module" crossorigin src="/assets/index-.+\.js"></script>\r?$
+^ {4}<link rel="stylesheet" crossorigin href="/assets/index-.+\.css">\r?$
+^ {2}</head>\r?$
+^ {2}<body>\r?$
+^ {4}<div id="app"></div>\r?$
+^ {4}<!--suppress HtmlUnknownTarget -->\r?$
+^ {2}</body>\r?$
+</html>\r?$
 "#,
     )
     .expect("Could not parse RegEx.")
