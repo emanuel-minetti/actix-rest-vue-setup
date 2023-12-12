@@ -18,7 +18,7 @@ async fn favicon_works() {
         .expect("Should be able to read 'favicon.ico'");
     // Act
     let response = client
-        .get(&format!("{}/favicon.ico", address))
+        .get(format!("{}/favicon.ico", address))
         .send()
         .await
         .expect("Failed to execute request.");
@@ -39,7 +39,6 @@ async fn url_root_routes_to_index() {
     let urls = vec!["", "/"];
     for url in urls {
         let response = client
-            //.get("http://127.0.0.1:8080".to_owned() + url)
             .get(address.to_owned() + url)
             .send()
             .await
