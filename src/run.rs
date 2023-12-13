@@ -1,5 +1,5 @@
-use actix_rest_vue_setup::run;
 use actix_rest_vue_setup::configuration::get_configuration;
+use actix_rest_vue_setup::run;
 use std::net::TcpListener;
 
 #[tokio::main]
