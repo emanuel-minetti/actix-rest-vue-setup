@@ -7,6 +7,7 @@ use std::io::{Read, Write};
 use std::net::TcpListener;
 use std::path::Path;
 use std::process::{Command, Stdio};
+use actix_web::middleware::Logger;
 use sysinfo::{Pid, ProcessExt, RefreshKind, System, SystemExt};
 
 const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
@@ -15,6 +16,7 @@ const PROCESS_NAME: &str = "actix-rest-vue-setup-run";
 pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
     let server = HttpServer::new(|| {
         App::new()
+            .wrap(Logger::default())
             .service(
                 web::scope("/login")
                     .route("", web::post().to(routes::hello_from_login))

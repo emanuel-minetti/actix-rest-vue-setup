@@ -1,6 +1,7 @@
 #[derive(serde::Deserialize)]
 pub struct Settings {
     pub application_port: u16,
+    pub logfile_path: String,
 }
 
 pub fn get_configuration() -> Result<Settings, config::ConfigError> {
