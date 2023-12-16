@@ -1,2 +1,3 @@
 application_port: 8080
 logfile_path: "log/logfile"
+loglevel: "debug"

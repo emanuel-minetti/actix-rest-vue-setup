@@ -1,13 +1,13 @@
 use crate::routes;
 use actix_files::Files;
 use actix_web::dev::Server;
+use actix_web::middleware::Logger;
 use actix_web::{web, App, HttpResponse, HttpServer};
 use std::fs::File;
 use std::io::{Read, Write};
 use std::net::TcpListener;
 use std::path::Path;
 use std::process::{Command, Stdio};
-use actix_web::middleware::Logger;
 use sysinfo::{Pid, ProcessExt, RefreshKind, System, SystemExt};
 
 const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
