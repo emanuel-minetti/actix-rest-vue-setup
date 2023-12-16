@@ -12,7 +12,7 @@ use std::net::TcpListener;
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
     let settings = get_configuration().expect("Failed to read configuration.");
-    let trigger = SizeTrigger::new(51200);
+    let trigger = SizeTrigger::new(51200000);
     let roll = FixedWindowRoller::builder()
         .base(1)
         .build((settings.logfile_path().to_owned() + "-{}").as_str(), 8)
