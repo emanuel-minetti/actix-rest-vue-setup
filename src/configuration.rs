@@ -4,7 +4,7 @@ use std::str::FromStr;
 #[derive(serde::Deserialize)]
 pub struct Settings {
     pub application_port: u16,
-    pub logfile_path: String,
+    logfile_path: String,
     // virtual optional field
     #[serde(default)]
     loglevel: Option<String>,
@@ -16,6 +16,11 @@ impl Settings {
             None => LevelFilter::Info,
             Some(loglevel) => LevelFilter::from_str(loglevel).unwrap_or(LevelFilter::Info),
         }
+    }
+
+    pub fn logfile_path(&self) -> String {
+        
+        self.logfile_path.clone()
     }
 }
 
