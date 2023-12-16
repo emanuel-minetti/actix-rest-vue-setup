@@ -49,7 +49,7 @@ pub fn start(forced: bool) {
     let child = Command::new("cargo")
         .arg("run")
         .arg("--bin")
-        .arg("actix-rest-vue-setup-run")
+        .arg(PROCESS_NAME)
         .stdout(Stdio::null())
         .stderr(Stdio::null())
         .spawn()
