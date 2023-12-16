@@ -10,7 +10,7 @@ use std::net::TcpListener;
 async fn main() -> Result<(), std::io::Error> {
     let settings = get_configuration().expect("Failed to read configuration.");
     let logfile = FileAppender::builder()
-        .encoder(Box::new(PatternEncoder::new("{d(%Y-%m-%d %H:%M:%S)}: [{l}] - {m}\n")))
+        .encoder(Box::new(PatternEncoder::new("{d(%Y-%m-%d %H:%M:%S)}: [{l}] - {m}{n}")))
         .build(&settings.logfile_path)?;
     let log_config = Config::builder()
         .appender(Appender::builder().build("logfile", Box::new(logfile)))
