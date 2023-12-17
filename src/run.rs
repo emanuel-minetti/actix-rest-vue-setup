@@ -15,14 +15,14 @@ async fn main() -> Result<(), std::io::Error> {
     let trigger = SizeTrigger::new(settings.log_settings.size());
     let roll = FixedWindowRoller::builder()
         .base(1)
-        .build((settings.log_settings.path().to_owned() + "-{}").as_str(), settings.log_settings.number())
+        .build((settings.log_settings.path().to_owned() + "-{}.log").as_str(), settings.log_settings.number())
         .expect("Failed to build log file roller");
     let policy = CompoundPolicy::new(Box::new(trigger), Box::new(roll));
     let logfile = RollingFileAppender::builder()
         .encoder(Box::new(PatternEncoder::new(
             "{d(%Y-%m-%d %H:%M:%S)}: [{l}] - {m}{n}",
         )))
-        .build(settings.log_settings.path(), Box::new(policy))?;
+        .build(settings.log_settings.path().to_owned() + ".log", Box::new(policy))?;
     let log_config = Config::builder()
         .appender(Appender::builder().build("logfile", Box::new(logfile)))
         .build(

@@ -9,7 +9,8 @@ pub struct Settings {
 
 #[derive(serde::Deserialize)]
 pub struct LogSettings{
-    path: String,
+    #[serde(default)]
+    path: Option<String>,
     #[serde(default)]
     level: Option<String>,
     #[serde(default)]
@@ -27,8 +28,7 @@ impl LogSettings {
     }
 
     pub fn path(&self) -> String {
-        
-        self.path.clone()
+        self.path.clone().unwrap_or("log/logfile".to_string())
     }
     pub fn size(&self) -> u64 {
         self.size.unwrap_or(1073741824)
