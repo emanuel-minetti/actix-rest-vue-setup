@@ -31,7 +31,9 @@ impl LogSettings {
         self.path.clone().unwrap_or("log/logfile".to_string())
     }
     pub fn size(&self) -> u64 {
-        self.size.unwrap_or(1073741824)
+        #[serde(default)]
+        #[serde(default)]
+        self.size.unwrap_or(104857600) // 100 MiB
     }
     pub fn number(&self) -> u32 {
         self.number.unwrap_or(9)

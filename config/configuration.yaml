@@ -1,9 +1,10 @@
 application_port: 8080
 log_settings:
-  path: "log/logfile"
-  ## Set log level (default = "info")
-  level: "debug"
-  ## Set maximal file size of logfile (default = 1073741824 = 1 gB)
-  size: 50000
-  ## Set number of retained logfiles (default = 9)
-  number: 4
+  ## Set path to logfile
+  #path: "log/logfile"
+  ## Set log level
+  #level: "info"
+  ## Set maximal file size of logfile (default is 104857600 = 100 MiB)
+  #size: 104857600
+  ## Set number of retained logfiles
+  #number: 9
