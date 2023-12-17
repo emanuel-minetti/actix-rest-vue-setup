@@ -4,23 +4,37 @@ use std::str::FromStr;
 #[derive(serde::Deserialize)]
 pub struct Settings {
     pub application_port: u16,
-    logfile_path: String,
-    // virtual optional field
-    #[serde(default)]
-    loglevel: Option<String>,
+    pub log_settings: LogSettings,
 }
 
-impl Settings {
-    pub fn loglevel(&self) -> LevelFilter {
-        match &self.loglevel {
+#[derive(serde::Deserialize)]
+pub struct LogSettings{
+    path: String,
+    #[serde(default)]
+    level: Option<String>,
+    #[serde(default)]
+    size: Option<u64>,
+    #[serde(default)]
+    number: Option<u32>,
+}
+
+impl LogSettings {
+    pub fn level(&self) -> LevelFilter {
+        match &self.level {
             None => LevelFilter::Info,
             Some(loglevel) => LevelFilter::from_str(loglevel).unwrap_or(LevelFilter::Info),
         }
     }
 
-    pub fn logfile_path(&self) -> String {
+    pub fn path(&self) -> String {
         
-        self.logfile_path.clone()
+        self.path.clone()
+    }
+    pub fn size(&self) -> u64 {
+        self.size.unwrap_or(1073741824)
+    }
+    pub fn number(&self) -> u32 {
+        self.number.unwrap_or(9)
     }
 }
 
