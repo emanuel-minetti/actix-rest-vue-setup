@@ -1,5 +1,4 @@
 use actix_rest_vue_setup::configuration::get_configuration;
-use actix_rest_vue_setup::run;
 use log4rs::append::rolling_file::policy::compound::roll::fixed_window::FixedWindowRoller;
 use log4rs::append::rolling_file::policy::compound::trigger::size::SizeTrigger;
 use log4rs::append::rolling_file::policy::compound::CompoundPolicy;
@@ -41,5 +40,5 @@ async fn main() -> Result<(), std::io::Error> {
     let address = format!("127.0.0.1:{}", settings.application_port);
     let listener = TcpListener::bind(address)?;
     log::debug!("Server about to start");
-    run(listener)?.await
+    actix_rest_vue_setup::startup::run(listener)?.await
 }
