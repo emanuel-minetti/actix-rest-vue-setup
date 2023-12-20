@@ -1,8 +1,9 @@
+use crate::configuration::{get_configuration, Settings};
 use crate::routes;
 use actix_files::Files;
 use actix_web::dev::Server;
 use actix_web::middleware::Logger;
-use actix_web::{web, App, HttpResponse, HttpServer};
+use actix_web::{web, HttpResponse, HttpServer};
 use std::fs::File;
 use std::io::{Read, Write};
 use std::net::TcpListener;
@@ -13,9 +14,15 @@ use sysinfo::{Pid, ProcessExt, RefreshKind, System, SystemExt};
 const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
 const PROCESS_NAME: &str = "actix-rest-vue-setup-run";
 
-pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
-    let server = HttpServer::new(|| {
-        App::new()
+pub struct App {
+    pub server: Result<Server, std::io::Error>,
+    pub settings: Settings,
+}
+
+pub fn run(listener: TcpListener) -> App {
+    let settings = get_configuration().expect("Failed to read configuration.");
+    let not_running_server = HttpServer::new(|| {
+        actix_web::App::new()
             .wrap(Logger::default())
             .service(
                 web::scope("/login")
@@ -31,9 +38,18 @@ pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
                     .route("/", web::get().to(routes::return_index)),
             )
     })
-    .listen(listener)?
-    .run();
-    Ok(server)
+    .listen(listener);
+
+    match not_running_server {
+        Ok(server) => App {
+            server: Ok(server.run()),
+            settings,
+        },
+        Err(err) => App {
+            server: Err(err),
+            settings,
+        },
+    }
 }
 
 pub fn start(forced: bool) {
