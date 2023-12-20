@@ -7,7 +7,7 @@ use std::io::{BufReader, Read};
 #[tokio::test]
 async fn favicon_works() {
     // Arrange
-    let address = spawn_app();
+    let test_app = spawn_app();
     let client = reqwest::Client::new();
     let file = File::open("src/vue-client/public/favicon.ico")
         .expect("Should be able to open 'favicon.ico'");
@@ -18,7 +18,7 @@ async fn favicon_works() {
         .expect("Should be able to read 'favicon.ico'");
     // Act
     let response = client
-        .get(format!("{}/favicon.ico", address))
+        .get(format!("{}/favicon.ico", test_app.address))
         .send()
         .await
         .expect("Failed to execute request.");
@@ -32,14 +32,14 @@ async fn favicon_works() {
 #[tokio::test]
 async fn url_root_routes_to_index() {
     // Arrange
-    let address = spawn_app();
+    let test_app = spawn_app();
     let client = reqwest::Client::new();
     let re = get_index_matching_reg_ex();
     // Act
     let urls = vec!["", "/"];
     for url in urls {
         let response = client
-            .get(address.to_owned() + url)
+            .get(test_app.address.to_owned() + url)
             .send()
             .await
             .expect("Failed to execute request.");
@@ -63,7 +63,7 @@ async fn url_root_routes_to_index() {
 #[tokio::test]
 async fn random_url_routes_to_index() {
     // Arrange
-    let address = spawn_app();
+    let test_app = spawn_app();
     let client = reqwest::Client::new();
     let re = get_index_matching_reg_ex();
     let urls = get_random_urls(10, 15);
@@ -71,7 +71,7 @@ async fn random_url_routes_to_index() {
     // Act
     for url in urls {
         let response = client
-            .get(address.to_owned() + "/" + url.as_str())
+            .get(test_app.address.to_owned() + "/" + url.as_str())
             .send()
             .await
             .expect("Failed to execute request.");
