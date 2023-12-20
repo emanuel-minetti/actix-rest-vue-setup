@@ -40,5 +40,5 @@ async fn main() -> Result<(), std::io::Error> {
     let address = format!("127.0.0.1:{}", settings.application_port);
     let listener = TcpListener::bind(address)?;
     log::debug!("Server about to start");
-    actix_rest_vue_setup::startup::run(listener)?.await
+    actix_rest_vue_setup::startup_lib::run(listener)?.await
 }
