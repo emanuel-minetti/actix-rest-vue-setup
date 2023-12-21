@@ -5,7 +5,10 @@ use std::fs::OpenOptions;
 async fn writing_to_logfile_works() {
     // Arrange
     let test_app = spawn_app();
-    let path = test_app.settings.log_settings().path() + ".log";
+    let path_string = test_app.settings.log_settings().path() + ".log";
+    let path = std::path::Path::new(&path_string);
+    let prefix = path.parent().unwrap();
+    std::fs::create_dir_all(prefix).unwrap();
     let file = OpenOptions::new()
         .write(true)
         .create(true)
