@@ -8,7 +8,7 @@ async fn writing_to_logfile_works() {
     let path = test_app.settings.log_settings().path() + ".log";
     let file = OpenOptions::new()
         .write(true)
-        .create(false)
+        .create(true)
         .open(path)
         .expect("Failed to open logfile for writing");
     file.set_len(0).expect("Clearing logfile failed");
