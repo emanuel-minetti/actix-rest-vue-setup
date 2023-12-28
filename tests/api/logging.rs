@@ -1,5 +1,6 @@
 use crate::helpers::spawn_app;
 use chrono::Local;
+use regex::Regex;
 use std::fs::{File, OpenOptions};
 use std::io::Read;
 
@@ -30,12 +31,12 @@ async fn writing_to_logfile_works() {
     let mut file = File::open(path).expect("Failed to open logfile for reading");
     let mut file_buffer = String::new();
     let _ = file.read_to_string(&mut file_buffer);
-    // let log_line_re =
-    //     Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
-    //         .unwrap();
-    // let line_caps = log_line_re
-    //     .captures(file_buffer.as_str())
-    //     .expect("No log entry from acting");
+    let log_line_re =
+        Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
+            .unwrap();
+    let _line_caps = log_line_re
+        .captures(file_buffer.as_str())
+        .expect("No log entry from acting");
     // let date_time_re = Regex::new(
     //     r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)",
     // )
