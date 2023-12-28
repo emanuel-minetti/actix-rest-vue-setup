@@ -34,7 +34,6 @@ async fn writing_to_logfile_works() {
     let log_line_re =
         Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
             .unwrap();
-    println!("{file_buffer}");
     let line_caps = log_line_re
         .captures(file_buffer.as_str())
         .expect("No log entry from acting");
