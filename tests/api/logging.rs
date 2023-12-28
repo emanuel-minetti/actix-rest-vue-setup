@@ -28,12 +28,14 @@ async fn writing_to_logfile_works() {
         .await
         .expect("Failed to execute request.");
     // Assert
+    file.sync_all().expect("Unable to sync file");
     let mut file = File::open(path).expect("Failed to open logfile for reading");
     let mut file_buffer = String::new();
     let _ = file.read_to_string(&mut file_buffer);
+    assert!(file_buffer.len() > 10);
     let log_line_re =
         Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
-            .expect("Could not pars RegEx for matching line");
+            .expect("Could not parse RegEx for matching line");
     let _line_caps = log_line_re
         .captures(file_buffer.as_str())
         .expect("No log entry from acting");
