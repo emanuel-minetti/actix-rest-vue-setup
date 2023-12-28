@@ -32,7 +32,7 @@ async fn writing_to_logfile_works() {
     let mut file_buffer = String::new();
     let _ = file.read_to_string(&mut file_buffer);
     let log_line_re =
-        Regex::new(r#"(?mR)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+$"#)
+        Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
             .unwrap();
     println!("{file_buffer}");
     let line_caps = log_line_re
