@@ -1,44 +1,13 @@
-use actix_rest_vue_setup::configuration::{get_configuration, LogSettings};
-use log4rs::append::rolling_file::policy::compound::roll::fixed_window::FixedWindowRoller;
-use log4rs::append::rolling_file::policy::compound::trigger::size::SizeTrigger;
-use log4rs::append::rolling_file::policy::compound::CompoundPolicy;
-use log4rs::append::rolling_file::RollingFileAppender;
-use log4rs::config::{Appender, Root};
-use log4rs::encode::pattern::PatternEncoder;
-use log4rs::Config;
+use actix_rest_vue_setup::configuration;
+use actix_rest_vue_setup::startup_lib;
 use std::net::TcpListener;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
-    let settings = get_configuration().expect("Failed to read configuration.");
-    config_logs(settings.log_settings());
+    let settings = configuration::get_configuration().expect("Failed to read configuration.");
+    startup_lib::apply_config(settings.clone());
     let address = format!("127.0.0.1:{}", settings.application_port);
     let listener = TcpListener::bind(address)?;
     log::debug!("Server about to start");
-    actix_rest_vue_setup::startup_lib::run(listener)
-        .server?
-        .await
-}
-
-fn config_logs(settings: LogSettings) {
-    let trigger = SizeTrigger::new(settings.size());
-    let roll = FixedWindowRoller::builder()
-        .base(1)
-        .build(
-            (settings.path().to_owned() + "-{}.log").as_str(),
-            settings.number(),
-        )
-        .expect("Failed to build log file roller");
-    let policy = CompoundPolicy::new(Box::new(trigger), Box::new(roll));
-    let logfile = RollingFileAppender::builder()
-        .encoder(Box::new(PatternEncoder::new(
-            "{d(%Y-%m-%d %H:%M:%S)}: [{l}] - {m}{n}",
-        )))
-        .build(settings.path().to_owned() + ".log", Box::new(policy))
-        .expect("Failed to build file appender");
-    let log_config = Config::builder()
-        .appender(Appender::builder().build("logfile", Box::new(logfile)))
-        .build(Root::builder().appender("logfile").build(settings.level()))
-        .expect("Could not build logging configuration.");
-    log4rs::init_config(log_config).expect("Could not initialize logging.");
+    startup_lib::run(listener)?.await
 }

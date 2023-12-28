@@ -1,5 +1,6 @@
 use crate::helpers::spawn_app;
-use std::fs::OpenOptions;
+use std::fs::{File, OpenOptions};
+use std::io::Read;
 
 #[tokio::test]
 async fn writing_to_logfile_works() {
@@ -15,12 +16,17 @@ async fn writing_to_logfile_works() {
         .open(path)
         .expect("Failed to open logfile for writing");
     file.set_len(0).expect("Clearing logfile failed");
+    log::info!("Logfile cleared in test 'writing_to_logfile_works'");
     let client = reqwest::Client::new();
     // Act
     let _ = client
-        .get(format!("{}/", &test_app.address))
+        .get(format!("{}/logtest", &test_app.address))
         .send()
         .await
         .expect("Failed to execute request.");
     // Assert
+    let mut file = File::open(path).expect("Failed to open logfile for reading");
+    let mut file_buffer = String::new();
+    let _ = file.read_to_string(&mut file_buffer);
+    assert!(file_buffer.contains(r"/logtest"))
 }

@@ -2,11 +2,17 @@ use log::LevelFilter;
 use std::str::FromStr;
 use std::string::ToString;
 
-#[derive(serde::Deserialize)]
+#[derive(serde::Deserialize, Clone)]
 pub struct Settings {
     pub application_port: u16,
     #[serde(default)]
     log_settings: Option<LogSettings>,
+}
+
+impl Settings {
+    pub fn set_log_settings(&mut self, log_settings: LogSettings) {
+        self.log_settings = Some(log_settings);
+    }
 }
 
 #[derive(serde::Deserialize, Clone)]
@@ -43,6 +49,9 @@ impl LogSettings {
             None => "log/logfile".to_string(),
             Some(path) => path.clone(),
         }
+    }
+    pub fn set_path(&mut self, new_path: String) {
+        self.path = Some(new_path)
     }
     pub fn size(&self) -> u64 {
         self.size.unwrap_or(104857600) // 100 MiB
