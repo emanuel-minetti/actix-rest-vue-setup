@@ -34,16 +34,16 @@ async fn writing_to_logfile_works() {
     let log_line_re =
         Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
             .unwrap();
-    let _line_caps = log_line_re
+    let line_caps = log_line_re
         .captures(file_buffer.as_str())
         .expect("No log entry from acting");
-    // let date_time_re = Regex::new(
-    //     r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)",
-    // )
-    // .unwrap();
-    // let dt_caps = date_time_re
-    //     .captures(&line_caps["date_time"])
-    //     .expect("Failed to parse date_time entry");
+    let date_time_re = Regex::new(
+        r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)",
+    )
+    .unwrap();
+    let _dt_caps = date_time_re
+        .captures(&line_caps["date_time"])
+        .expect("Failed to parse date_time entry");
     // let year: i32 = dt_caps["year"].parse().expect("Failed to parse year");
     // let month: u32 = dt_caps["month"].parse().expect("Failed to parse month");
     // let day: u32 = dt_caps["day"].parse().expect("Failed to parse day");
