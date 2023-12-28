@@ -32,7 +32,7 @@ async fn writing_to_logfile_works() {
     let mut file = File::open(path).expect("Failed to open logfile for reading");
     let mut file_buffer = String::new();
     let _ = file.read_to_string(&mut file_buffer);
-    // assert!(file_buffer.len() > 10);
+    assert!(file_buffer.len() > 100);
     let log_line_re =
         Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
             .expect("Could not parse RegEx for matching line");
