@@ -1,6 +1,7 @@
 use crate::helpers::spawn_app;
 use chrono::Local;
-use std::fs::OpenOptions;
+use std::fs::{File, OpenOptions};
+use std::io::Read;
 
 #[tokio::test]
 async fn writing_to_logfile_works() {
@@ -26,9 +27,9 @@ async fn writing_to_logfile_works() {
         .await
         .expect("Failed to execute request.");
     // Assert
-    // let mut file = File::open(path).expect("Failed to open logfile for reading");
-    // let mut file_buffer = String::new();
-    // let _ = file.read_to_string(&mut file_buffer);
+    let mut file = File::open(path).expect("Failed to open logfile for reading");
+    let mut file_buffer = String::new();
+    let _ = file.read_to_string(&mut file_buffer);
     // let log_line_re =
     //     Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
     //         .unwrap();
