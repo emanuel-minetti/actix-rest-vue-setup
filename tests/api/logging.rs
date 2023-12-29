@@ -21,7 +21,7 @@ async fn writing_to_logfile_works() {
     log::info!("Logfile cleared in test 'writing_to_logfile_works'");
     let client = reqwest::Client::new();
     // Act
-    let _now_local_dt = Local::now();
+    let now_local_dt = Local::now();
     let _ = client
         .get(format!("{}/logtest", &test_app.address))
         .send()
@@ -53,16 +53,16 @@ async fn writing_to_logfile_works() {
     let hour: u32 = dt_caps["hour"].parse().expect("Failed to parse hour");
     let minute: u32 = dt_caps["minute"].parse().expect("Failed to parse minute");
     let second: u32 = dt_caps["second"].parse().expect("Failed to parse second");
-    let _logged_local_dt = NaiveDate::from_ymd_opt(year, month, day)
+    let logged_local_dt = NaiveDate::from_ymd_opt(year, month, day)
         .unwrap()
         .and_hms_opt(hour, minute, second)
         .unwrap()
         .and_local_timezone(Local)
         .unwrap();
-    // let dt_diff_in_secs = now_local_dt
-    //     .signed_duration_since(logged_local_dt)
-    //     .abs()
-    //     .num_seconds();
-    // assert_eq!(&line_caps["log_level"], "INFO");
-    // assert!(dt_diff_in_secs <= 2);
+    let dt_diff_in_secs = now_local_dt
+        .signed_duration_since(logged_local_dt)
+        .abs()
+        .num_seconds();
+    assert_eq!(&line_caps["log_level"], "INFO");
+    assert!(dt_diff_in_secs <= 2);
 }
