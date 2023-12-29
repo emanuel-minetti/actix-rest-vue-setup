@@ -44,15 +44,15 @@ async fn writing_to_logfile_works() {
         r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)",
     )
     .expect("Unable to parse RegEx for timestamp");
-    let _dt_caps = date_time_re
+    let dt_caps = date_time_re
         .captures(&line_caps["date_time"])
         .expect("Failed to parse date_time entry");
-    // let year: i32 = dt_caps["year"].parse().expect("Failed to parse year");
-    // let month: u32 = dt_caps["month"].parse().expect("Failed to parse month");
-    // let day: u32 = dt_caps["day"].parse().expect("Failed to parse day");
-    // let hour: u32 = dt_caps["hour"].parse().expect("Failed to parse hour");
-    // let minute: u32 = dt_caps["minute"].parse().expect("Failed to parse minute");
-    // let second: u32 = dt_caps["second"].parse().expect("Failed to parse second");
+    let _year: i32 = dt_caps["year"].parse().expect("Failed to parse year");
+    let _month: u32 = dt_caps["month"].parse().expect("Failed to parse month");
+    let _day: u32 = dt_caps["day"].parse().expect("Failed to parse day");
+    let _hour: u32 = dt_caps["hour"].parse().expect("Failed to parse hour");
+    let _minute: u32 = dt_caps["minute"].parse().expect("Failed to parse minute");
+    let _second: u32 = dt_caps["second"].parse().expect("Failed to parse second");
     // let logged_local_dt = NaiveDate::from_ymd_opt(year, month, day)
     //     .unwrap()
     //     .and_hms_opt(hour, minute, second)
