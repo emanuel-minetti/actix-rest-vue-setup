@@ -1,5 +1,4 @@
 use crate::helpers;
-use crate::helpers::spawn_app;
 use regex::Regex;
 use std::fs::File;
 use std::io::{BufReader, Read};
@@ -7,7 +6,7 @@ use std::io::{BufReader, Read};
 #[tokio::test]
 async fn favicon_works() {
     // Arrange
-    let test_app = spawn_app();
+    let test_app = helpers::spawn_app();
     let client = reqwest::Client::new();
     let file = File::open("src/vue-client/public/favicon.ico")
         .expect("Should be able to open 'favicon.ico'");
@@ -32,7 +31,7 @@ async fn favicon_works() {
 #[tokio::test]
 async fn url_root_routes_to_index() {
     // Arrange
-    let test_app = spawn_app();
+    let test_app = helpers::spawn_app();
     let client = reqwest::Client::new();
     let re = get_index_matching_reg_ex();
     // Act
@@ -63,7 +62,7 @@ async fn url_root_routes_to_index() {
 #[tokio::test]
 async fn random_url_routes_to_index() {
     // Arrange
-    let test_app = spawn_app();
+    let test_app = helpers::spawn_app();
     let client = reqwest::Client::new();
     let re = get_index_matching_reg_ex();
     let urls = helpers::get_random_urls(10, 15);
