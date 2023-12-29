@@ -1,4 +1,4 @@
-use crate::helpers::spawn_app;
+use crate::helpers;
 use chrono::{Local, NaiveDate};
 use regex::Regex;
 use std::fs::{File, OpenOptions};
@@ -7,7 +7,7 @@ use std::io::Read;
 #[tokio::test]
 async fn writing_to_logfile_works() {
     // Arrange
-    let test_app = spawn_app();
+    let test_app = helpers::spawn_app();
     let path_string = test_app.settings.log_settings().path() + ".log";
     let path = std::path::Path::new(&path_string);
     let prefix = path.parent().unwrap();
