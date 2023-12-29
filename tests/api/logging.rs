@@ -39,10 +39,10 @@ async fn writing_to_logfile_works() {
     let _line_caps = log_line_re
         .captures(file_buffer.as_str())
         .expect("No log entry from acting");
-    // let date_time_re = Regex::new(
-    //     r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)",
-    // )
-    // .unwrap();
+    let _date_time_re = Regex::new(
+        r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)",
+    )
+    .expect("Could not parse RegEx for matching timestamp");
     // let _dt_caps = date_time_re
     //     .captures(&line_caps["date_time"])
     //     .expect("Failed to parse date_time entry");
