@@ -20,10 +20,12 @@ async fn writing_to_logfile_works() {
     file.set_len(0).expect("Clearing logfile failed");
     log::info!("Logfile cleared in test 'writing_to_logfile_works'");
     let client = reqwest::Client::new();
+    let random_urls = helpers::get_random_urls(1, 8);
+    let url = random_urls.first().unwrap();
     // Act
     let now_local_dt = Local::now();
     let _ = client
-        .get(format!("{}/logtest", &test_app.address))
+        .get(format!("{}/{}", &test_app.address, url))
         .send()
         .await
         .expect("Failed to execute request.");
@@ -33,9 +35,14 @@ async fn writing_to_logfile_works() {
     let mut file_buffer = String::new();
     let _ = file.read_to_string(&mut file_buffer);
     assert!(file_buffer.len() > 100);
-    let log_line_re =
-        Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
-            .expect("Could not parse RegEx for matching line");
+    let log_line_re = Regex::new(
+        format!(
+            r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /{}.+\r?$"#,
+            url
+        )
+        .as_str(),
+    )
+    .expect("Could not parse RegEx for matching line");
     println!("{}", &file_buffer);
     let line_caps = log_line_re
         .captures(file_buffer.as_str())

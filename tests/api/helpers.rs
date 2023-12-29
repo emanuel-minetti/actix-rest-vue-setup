@@ -1,6 +1,7 @@
 use actix_rest_vue_setup::configuration::{get_configuration, Settings};
 use actix_rest_vue_setup::startup_lib;
 
+use rand::Rng;
 use std::net::TcpListener;
 
 pub fn spawn_app() -> TestApp {
@@ -25,4 +26,44 @@ pub fn spawn_app() -> TestApp {
 pub struct TestApp {
     pub settings: Settings,
     pub address: String,
+}
+
+/// Returns a `Vec` of random URLs. The returned URLs are not a valid route.
+///
+/// # Arguments
+///
+/// * `size`: The size of the returned `Vec`.
+/// * `url_length`: The length of the returned URLs.
+///
+/// returns: Vec<String>
+///
+/// # Examples
+///
+/// ```
+///
+/// ```
+pub fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
+    let mut res = Vec::new();
+    while res.len() < size {
+        let candidate = get_random_string(url_length);
+        if !candidate.starts_with("/api")
+            && !candidate.starts_with("/login")
+            && !candidate.starts_with('~')
+            && !candidate.chars().next().unwrap().is_ascii_digit()
+        {
+            res.push(candidate);
+        }
+    }
+    res
+}
+
+fn get_random_string(length: u8) -> String {
+    const CHARSET: &[u8] = b"abcdefghijklmnopqrstuvwxyz0123456789~";
+    let mut rng = rand::thread_rng();
+    (0..length)
+        .map(|_| {
+            let index = rng.gen_range(0..CHARSET.len());
+            CHARSET[index] as char
+        })
+        .collect()
 }
