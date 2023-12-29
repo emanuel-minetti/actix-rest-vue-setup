@@ -9,12 +9,6 @@ pub struct Settings {
     log_settings: Option<LogSettings>,
 }
 
-impl Settings {
-    pub fn set_log_settings(&mut self, log_settings: LogSettings) {
-        self.log_settings = Some(log_settings);
-    }
-}
-
 #[derive(serde::Deserialize, Clone)]
 pub struct LogSettings {
     #[serde(default)]
@@ -34,6 +28,9 @@ impl Settings {
             Some(log_settings) => log_settings.clone(),
         }
     }
+    pub fn set_log_settings(&mut self, log_settings: LogSettings) {
+        self.log_settings = Some(log_settings);
+    }
 }
 
 impl LogSettings {
@@ -43,7 +40,6 @@ impl LogSettings {
             Some(loglevel) => LevelFilter::from_str(loglevel).unwrap_or(LevelFilter::Info),
         }
     }
-
     pub fn path(&self) -> String {
         match &self.path {
             None => "log/logfile".to_string(),

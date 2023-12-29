@@ -1,10 +1,10 @@
 use crate::configuration::{LogSettings, Settings};
 use crate::routes;
+
 use actix_files::Files;
 use actix_web::dev::Server;
 use actix_web::middleware::Logger;
 use actix_web::{web, HttpResponse, HttpServer};
-
 use log4rs::append::rolling_file::policy::compound::roll::fixed_window::FixedWindowRoller;
 use log4rs::append::rolling_file::policy::compound::trigger::size::SizeTrigger;
 use log4rs::append::rolling_file::policy::compound::CompoundPolicy;
@@ -12,7 +12,6 @@ use log4rs::append::rolling_file::RollingFileAppender;
 use log4rs::config::{Appender, Root};
 use log4rs::encode::pattern::PatternEncoder;
 use log4rs::Config;
-
 use std::fs::File;
 use std::io::{Read, Write};
 use std::net::TcpListener;
@@ -52,6 +51,7 @@ pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
 pub fn apply_config(settings: Settings) {
     config_logs(settings.log_settings())
 }
+
 fn config_logs(settings: LogSettings) {
     let trigger = SizeTrigger::new(settings.size());
     let roll = FixedWindowRoller::builder()
