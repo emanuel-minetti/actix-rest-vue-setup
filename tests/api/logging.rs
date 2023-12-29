@@ -28,7 +28,7 @@ async fn writing_to_logfile_works() {
         .await
         .expect("Failed to execute request.");
     // Assert
-    // file.sync_all().expect("Unable to sync file");
+    file.sync_all().expect("Unable to sync file");
     let mut file = File::open(path).expect("Failed to open logfile for reading");
     let mut file_buffer = String::new();
     let _ = file.read_to_string(&mut file_buffer);
@@ -36,16 +36,16 @@ async fn writing_to_logfile_works() {
     let log_line_re =
         Regex::new(r#"(?m)^(?P<date_time>[\d\- :]+): \[(?P<log_level>\w+)].+"GET /logtest.+\r?$"#)
             .expect("Could not parse RegEx for matching line");
-    let line_caps = log_line_re
+    let _line_caps = log_line_re
         .captures(file_buffer.as_str())
         .expect("No log entry from acting");
-    let date_time_re = Regex::new(
-        r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)",
-    )
-    .expect("Could not parse RegEx for matching timestamp");
-    let _dt_caps = date_time_re
-        .captures(&line_caps["date_time"])
-        .expect("Failed to parse date_time entry");
+    // let date_time_re = Regex::new(
+    //     r"(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+) (?P<hour>\d+):(?P<minute>\d+):(?P<second>\d+)",
+    // )
+    // .unwrap();
+    // let _dt_caps = date_time_re
+    //     .captures(&line_caps["date_time"])
+    //     .expect("Failed to parse date_time entry");
     // let year: i32 = dt_caps["year"].parse().expect("Failed to parse year");
     // let month: u32 = dt_caps["month"].parse().expect("Failed to parse month");
     // let day: u32 = dt_caps["day"].parse().expect("Failed to parse day");
