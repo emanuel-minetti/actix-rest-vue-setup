@@ -57,6 +57,10 @@ script = [
 command = "cargo"
 args = ["clean"]
 
+[tasks.server-doc]
+command = "cargo"
+args = ["doc", "--no-deps"]
+
 [tasks.server-build]
 command = "cargo"
 args = ["build"]
@@ -82,7 +86,7 @@ command = "cargo"
 args = ["update"]
 
 [tasks.server-test]
-dependencies = ["server-stop", "server-format", "server-lint", "server-build"]
+dependencies = ["server-stop", "server-format", "server-lint", "server-build", "server-doc"]
 command = "cargo"
 args = ["test"]
 

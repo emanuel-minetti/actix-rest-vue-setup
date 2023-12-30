@@ -48,6 +48,23 @@ pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
     }
 }
 
+/// Applies the given settings. To be used before using `run()`
+///
+/// # Arguments
+///
+/// * `settings`: The settings to be used.
+///
+/// returns: ()
+///
+/// # Examples
+///
+/// ```
+/// use actix_rest_vue_setup::configuration::get_configuration;
+/// use actix_rest_vue_setup::startup_lib::apply_config;
+///
+/// let settings = get_configuration().unwrap();
+/// apply_config(settings);
+/// ```
 pub fn apply_config(settings: Settings) {
     config_logs(settings.log_settings())
 }

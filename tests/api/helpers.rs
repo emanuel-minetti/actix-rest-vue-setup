@@ -1,5 +1,4 @@
-use actix_rest_vue_setup::configuration::{get_configuration, Settings};
-use actix_rest_vue_setup::startup_lib;
+use actix_rest_vue_setup::{configuration, startup_lib};
 
 use rand::Rng;
 use std::net::TcpListener;
@@ -9,7 +8,7 @@ pub fn spawn_app() -> TestApp {
     let port = listener.local_addr().unwrap().port();
     let address = format!("http://127.0.0.1:{}", port);
     let app = startup_lib::run(listener);
-    let mut settings = get_configuration().expect("Failed to read configuration");
+    let mut settings = configuration::get_configuration().expect("Failed to read configuration");
     settings.application_port = port;
     let mut log_settings = settings.log_settings();
     log_settings.set_path("log/logfile_test".to_string());
@@ -24,7 +23,7 @@ pub fn spawn_app() -> TestApp {
 }
 
 pub struct TestApp {
-    pub settings: Settings,
+    pub settings: configuration::Settings,
     pub address: String,
 }
 
@@ -40,6 +39,9 @@ pub struct TestApp {
 /// # Examples
 ///
 /// ```
+/// // size determines the length of the returned `Vec`.
+/// let random_urls = get_random_urls(1, 5);
+/// assert!(random_urls.len() == 1);
 ///
 /// ```
 pub fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
