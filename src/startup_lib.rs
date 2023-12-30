@@ -1,20 +1,31 @@
+use crate::configuration::{LogSettings, Settings};
 use crate::routes;
+
 use actix_files::Files;
 use actix_web::dev::Server;
-use actix_web::{web, App, HttpResponse, HttpServer};
+use actix_web::middleware::Logger;
+use actix_web::{web, HttpResponse, HttpServer};
+use log4rs::append::rolling_file::policy::compound::roll::fixed_window::FixedWindowRoller;
+use log4rs::append::rolling_file::policy::compound::trigger::size::SizeTrigger;
+use log4rs::append::rolling_file::policy::compound::CompoundPolicy;
+use log4rs::append::rolling_file::RollingFileAppender;
+use log4rs::config::{Appender, Root};
+use log4rs::encode::pattern::PatternEncoder;
+use log4rs::Config;
 use std::fs::File;
 use std::io::{Read, Write};
 use std::net::TcpListener;
 use std::path::Path;
 use std::process::{Command, Stdio};
-use sysinfo::{Pid, ProcessExt, RefreshKind, System, SystemExt};
+use sysinfo::{Pid, RefreshKind, System};
 
 const PID_FILE_PATH: &str = "actix-rest-vue-setup.pid";
 const PROCESS_NAME: &str = "actix-rest-vue-setup-run";
 
 pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
-    let server = HttpServer::new(|| {
-        App::new()
+    let not_running_server = HttpServer::new(|| {
+        actix_web::App::new()
+            .wrap(Logger::default())
             .service(
                 web::scope("/login")
                     .route("", web::post().to(routes::hello_from_login))
@@ -29,9 +40,65 @@ pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
                     .route("/", web::get().to(routes::return_index)),
             )
     })
-    .listen(listener)?
-    .run();
-    Ok(server)
+    .listen(listener);
+
+    match not_running_server {
+        Ok(server) => Ok(server.run()),
+        Err(err) => Err(err),
+    }
+}
+
+/// Applies the given settings. To be used before using `run()`
+///
+/// # Arguments
+///
+/// * `settings`: The settings to be used.
+///
+/// returns: ()
+///
+/// # Examples
+///
+/// ```
+/// use actix_rest_vue_setup::configuration::get_configuration;
+/// use actix_rest_vue_setup::startup_lib::apply_config;
+///
+/// let settings = get_configuration().unwrap();
+/// apply_config(settings);
+/// ```
+pub fn apply_config(settings: Settings) {
+    config_logs(settings.log_settings())
+}
+
+fn config_logs(settings: LogSettings) {
+    let trigger = SizeTrigger::new(settings.size());
+    let roll = FixedWindowRoller::builder()
+        .base(1)
+        .build(
+            (settings.path().to_owned() + "-{}.log").as_str(),
+            settings.number(),
+        )
+        .expect("Failed to build log file roller");
+    let policy = CompoundPolicy::new(Box::new(trigger), Box::new(roll));
+    let logfile = RollingFileAppender::builder()
+        .encoder(Box::new(PatternEncoder::new(
+            "{d(%Y-%m-%d %H:%M:%S)}: [{l}] - {m}{n}",
+        )))
+        .build(settings.path().to_owned() + ".log", Box::new(policy))
+        .expect("Failed to build file appender");
+    let log_config = Config::builder()
+        .appender(Appender::builder().build(settings.path(), Box::new(logfile)))
+        .build(
+            Root::builder()
+                .appender(settings.path())
+                .build(settings.level()),
+        )
+        .expect("Could not build logging configuration.");
+    match log4rs::init_config(log_config) {
+        Ok(_) => {}
+        Err(e) => {
+            println!("error was {e}");
+        }
+    }
 }
 
 pub fn start(forced: bool) {
@@ -47,7 +114,7 @@ pub fn start(forced: bool) {
     let child = Command::new("cargo")
         .arg("run")
         .arg("--bin")
-        .arg("actix-rest-vue-setup-run")
+        .arg(PROCESS_NAME)
         .stdout(Stdio::null())
         .stderr(Stdio::null())
         .spawn()

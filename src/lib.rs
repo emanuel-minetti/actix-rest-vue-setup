@@ -1,5 +1,3 @@
 pub mod configuration;
 mod routes;
-pub mod startup;
-
-pub use startup::run;
+pub mod startup_lib;

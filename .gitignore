@@ -1,5 +1,6 @@
 /target
 /public
+/log
 /actix-rest-vue-setup.pid
 /.cargo/advisory-db/
 /.cargo/advisory-db..lock

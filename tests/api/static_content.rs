@@ -1,5 +1,5 @@
-use crate::helpers::spawn_app;
-use rand::Rng;
+use crate::helpers;
+
 use regex::Regex;
 use std::fs::File;
 use std::io::{BufReader, Read};
@@ -7,7 +7,7 @@ use std::io::{BufReader, Read};
 #[tokio::test]
 async fn favicon_works() {
     // Arrange
-    let address = spawn_app();
+    let test_app = helpers::spawn_app();
     let client = reqwest::Client::new();
     let file = File::open("src/vue-client/public/favicon.ico")
         .expect("Should be able to open 'favicon.ico'");
@@ -18,7 +18,7 @@ async fn favicon_works() {
         .expect("Should be able to read 'favicon.ico'");
     // Act
     let response = client
-        .get(format!("{}/favicon.ico", address))
+        .get(format!("{}/favicon.ico", test_app.address))
         .send()
         .await
         .expect("Failed to execute request.");
@@ -32,14 +32,14 @@ async fn favicon_works() {
 #[tokio::test]
 async fn url_root_routes_to_index() {
     // Arrange
-    let address = spawn_app();
+    let test_app = helpers::spawn_app();
     let client = reqwest::Client::new();
     let re = get_index_matching_reg_ex();
     // Act
     let urls = vec!["", "/"];
     for url in urls {
         let response = client
-            .get(address.to_owned() + url)
+            .get(test_app.address.to_owned() + url)
             .send()
             .await
             .expect("Failed to execute request.");
@@ -63,15 +63,14 @@ async fn url_root_routes_to_index() {
 #[tokio::test]
 async fn random_url_routes_to_index() {
     // Arrange
-    let address = spawn_app();
+    let test_app = helpers::spawn_app();
     let client = reqwest::Client::new();
     let re = get_index_matching_reg_ex();
-    let urls = get_random_urls(10, 15);
-
+    let urls = helpers::get_random_urls(10, 15);
     // Act
     for url in urls {
         let response = client
-            .get(address.to_owned() + "/" + url.as_str())
+            .get(test_app.address.to_owned() + "/" + url.as_str())
             .send()
             .await
             .expect("Failed to execute request.");
@@ -89,7 +88,7 @@ async fn random_url_routes_to_index() {
     }
 }
 
-pub fn get_index_matching_reg_ex() -> Regex {
+fn get_index_matching_reg_ex() -> Regex {
     Regex::new(
         r#"(?m)^<!DOCTYPE html>\r?$
 ^<html lang="en">\r?$
@@ -109,30 +108,4 @@ pub fn get_index_matching_reg_ex() -> Regex {
 "#,
     )
     .expect("Could not parse RegEx.")
-}
-
-fn get_random_urls(size: usize, url_length: u8) -> Vec<String> {
-    let mut res = Vec::new();
-    while res.len() < size {
-        let candidate = get_random_string(url_length);
-        if !candidate.starts_with("/api")
-            && !candidate.starts_with("/login")
-            && !candidate.starts_with('~')
-            && !candidate.chars().next().unwrap().is_ascii_digit()
-        {
-            res.push(candidate);
-        }
-    }
-    res
-}
-
-fn get_random_string(length: u8) -> String {
-    const CHARSET: &[u8] = b"abcdefghijklmnopqrstuvwxyz0123456789~";
-    let mut rng = rand::thread_rng();
-    (0..length)
-        .map(|_| {
-            let index = rng.gen_range(0..CHARSET.len());
-            CHARSET[index] as char
-        })
-        .collect()
 }
