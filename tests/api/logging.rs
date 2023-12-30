@@ -4,6 +4,8 @@ use chrono::{Local, NaiveDate};
 use regex::Regex;
 use std::fs::{File, OpenOptions};
 use std::io::Read;
+use std::time::Duration;
+use tokio::time::sleep;
 
 #[tokio::test]
 async fn writing_to_logfile_works() {
@@ -32,6 +34,7 @@ async fn writing_to_logfile_works() {
         .expect("Failed to execute request.");
     // Assert
     file.sync_all().expect("Unable to sync file");
+    sleep(Duration::from_millis(100)).await;
     let mut file = File::open(path).expect("Failed to open logfile for reading");
     let mut file_buffer = String::new();
     let _ = file.read_to_string(&mut file_buffer);
