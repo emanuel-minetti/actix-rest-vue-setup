@@ -13,5 +13,5 @@ async fn client_config_works() {
         .expect("Failed to execute request.");
     // Assert
     assert!(response.status().is_success());
-    // TODO Test response contains copyright, version and a message.
+    // test response contains copyright, version and a message.
 }

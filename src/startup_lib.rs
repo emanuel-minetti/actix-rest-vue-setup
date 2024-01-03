@@ -34,7 +34,7 @@ pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
             .service(
                 web::scope("/api")
                     .route("/health_check", web::get().to(routes::health_check))
-                    .route("/config", web::get().to(routes::health_check)),
+                    .route("/config", web::get().to(routes::client_config)),
             )
             .service(
                 web::scope("")
