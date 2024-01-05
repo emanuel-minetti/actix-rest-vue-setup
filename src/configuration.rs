@@ -1,10 +1,12 @@
 use log::LevelFilter;
+use serde::Serialize;
 use std::str::FromStr;
 use std::string::ToString;
 
 #[derive(serde::Deserialize, Clone)]
 pub struct Settings {
     pub application_port: u16,
+    pub client_settings: ClientSettings,
     #[serde(default)]
     log_settings: Option<LogSettings>,
 }
@@ -21,11 +23,11 @@ pub struct LogSettings {
     number: Option<u32>,
 }
 
-#[derive(serde::Deserialize)]
+#[derive(serde::Deserialize, Serialize, Clone)]
 pub struct ClientSettings {
     copyright: String,
     version: String,
-    message: String,
+    global_message: String,
 }
 
 impl Settings {
@@ -35,6 +37,7 @@ impl Settings {
             Some(log_settings) => log_settings.clone(),
         }
     }
+    // TODO move to test
     pub fn set_log_settings(&mut self, log_settings: LogSettings) {
         self.log_settings = Some(log_settings);
     }

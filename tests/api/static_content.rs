@@ -79,7 +79,7 @@ async fn random_url_routes_to_index() {
         let response = response
             .text()
             .await
-            .expect("Failed to get request body")
+            .expect("Failed to get response body")
             .as_str()
             .to_owned();
         // dbg!(&response);

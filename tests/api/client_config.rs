@@ -18,7 +18,7 @@ async fn client_config_works() {
     let response = response
         .text()
         .await
-        .expect("Failed to get request body")
+        .expect("Failed to get response body")
         .as_str()
         .to_owned();
     let _: ClientSettings = serde_json::from_str(&response).expect("Failed to parse answer.");
