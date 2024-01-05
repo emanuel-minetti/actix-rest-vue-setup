@@ -21,6 +21,13 @@ pub struct LogSettings {
     number: Option<u32>,
 }
 
+#[derive(serde::Deserialize)]
+pub struct ClientSettings {
+    copyright: String,
+    version: String,
+    message: String,
+}
+
 impl Settings {
     pub fn log_settings(&self) -> LogSettings {
         match &self.log_settings {
