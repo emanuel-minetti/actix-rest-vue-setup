@@ -2,7 +2,7 @@ use crate::helpers::spawn_app;
 use actix_rest_vue_setup::configuration::ClientSettings;
 
 #[tokio::test]
-async fn client_config_works() {
+async fn client_config_delivers_config() {
     // Arrange
     let test_app = spawn_app();
     let client = reqwest::Client::new();
@@ -14,12 +14,13 @@ async fn client_config_works() {
         .expect("Failed to execute request.");
     // Assert
     assert!(response.status().is_success());
-    // test response contains copyright, version and a message.
     let response = response
         .text()
         .await
         .expect("Failed to get response body")
         .as_str()
         .to_owned();
-    let _: ClientSettings = serde_json::from_str(&response).expect("Failed to parse answer.");
+    let client_settings: ClientSettings =
+        serde_json::from_str(&response).expect("Failed to parse answer.");
+    assert_eq!(client_settings, test_app.settings.client_settings)
 }
