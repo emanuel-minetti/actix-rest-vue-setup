@@ -2,7 +2,7 @@ use log::LevelFilter;
 use std::str::FromStr;
 use std::string::ToString;
 
-#[derive(serde::Deserialize, Clone)]
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct Settings {
     pub application_port: u16,
     pub client_settings: ClientSettings,
@@ -10,7 +10,7 @@ pub struct Settings {
     log_settings: Option<LogSettings>,
 }
 
-#[derive(serde::Deserialize, Clone)]
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct LogSettings {
     #[serde(default)]
     path: Option<String>,
