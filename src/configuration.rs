@@ -2,14 +2,15 @@ use log::LevelFilter;
 use std::str::FromStr;
 use std::string::ToString;
 
-#[derive(serde::Deserialize, Clone)]
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct Settings {
     pub application_port: u16,
+    pub client_settings: ClientSettings,
     #[serde(default)]
     log_settings: Option<LogSettings>,
 }
 
-#[derive(serde::Deserialize, Clone)]
+#[derive(serde::Deserialize, serde::Serialize, Clone)]
 pub struct LogSettings {
     #[serde(default)]
     path: Option<String>,
@@ -19,6 +20,13 @@ pub struct LogSettings {
     size: Option<u64>,
     #[serde(default)]
     number: Option<u32>,
+}
+
+#[derive(serde::Deserialize, serde::Serialize, Clone, PartialEq, Eq, Debug)]
+pub struct ClientSettings {
+    copyright: String,
+    version: String,
+    global_message: String,
 }
 
 impl Settings {

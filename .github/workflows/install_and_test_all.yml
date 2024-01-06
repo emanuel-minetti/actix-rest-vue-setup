@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Update apt
+        run: sudo apt-get update
       - name: Install Node and npm
         run: sudo apt-get install nodejs npm
       - name: Install LLVM and Clang

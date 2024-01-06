@@ -1,3 +1,4 @@
+mod client_config;
 mod health_check;
 mod helpers;
 mod logging;

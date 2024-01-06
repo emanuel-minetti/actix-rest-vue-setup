@@ -31,7 +31,11 @@ pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
                     .route("", web::post().to(routes::hello_from_login))
                     .default_service(web::route().to(HttpResponse::MethodNotAllowed)),
             )
-            .service(web::scope("/api").route("/health_check", web::get().to(routes::health_check)))
+            .service(
+                web::scope("/api")
+                    .route("/health_check", web::get().to(routes::health_check))
+                    .route("/config", web::get().to(routes::client_config)),
+            )
             .service(
                 web::scope("")
                     .service(Files::new("/assets", "./public/assets"))
