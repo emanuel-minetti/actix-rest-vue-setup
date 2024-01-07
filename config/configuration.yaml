@@ -1,8 +1,8 @@
 application_port: 8080
 client_settings:
-  copyright: "© Example.com  2023-24"
+  copyright: "© Example.com 2023-24"
   version: "0.0.1"
-  global_message: "Soso"
+  global_message: "The server will be down at Wednesday (1-10) from 9:00 to 12:00 am for maintenance."
 log_settings:
   ## Set path to logfile
   #path: "log/logfile"
