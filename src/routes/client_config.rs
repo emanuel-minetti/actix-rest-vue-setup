@@ -8,9 +8,8 @@ pub async fn client_config() -> HttpResponse {
             let body = serde_json::to_string(&config.client_settings);
             match body {
                 Ok(body) => HttpResponse::Ok().body(body),
-                Err(e) => {
-                    HttpResponse::InternalServerError().body(format!("Could not parse to JSON: {e}",))
-                }
+                Err(e) => HttpResponse::InternalServerError()
+                    .body(format!("Could not parse to JSON: {e}",)),
             }
         }
         Err(e) => HttpResponse::InternalServerError().body(format!("Couldn't read config: {e}")),
