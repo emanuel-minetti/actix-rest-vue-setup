@@ -44,7 +44,7 @@
             </li>
           </ul>
         </div>
-        <div class="col-9 text-center">&copy; Example.com 2023</div>
+        <div class="col-9 text-center">{{ config.copyright }}</div>
       </div>
     </div>
   </footer>
@@ -52,6 +52,17 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
+import { useConfigStore } from '@/stores/config';
+import { computed, onMounted } from 'vue';
+
+const configStore = useConfigStore();
+const config = computed(() => {
+  return configStore.config;
+});
+
+onMounted(() => {
+  configStore.fetchConfig();
+});
 </script>
 
 <style lang="scss" scoped>

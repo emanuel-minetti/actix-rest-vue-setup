@@ -7,7 +7,9 @@ pub async fn client_config() -> HttpResponse {
         Ok(config) => {
             let body = serde_json::to_string(&config.client_settings);
             match body {
-                Ok(body) => HttpResponse::Ok().body(body),
+                Ok(body) => {
+                    HttpResponse::Ok().content_type("application/json").body(body)
+                },
                 Err(e) => HttpResponse::InternalServerError()
                     .body(format!("Could not parse to JSON: {e}",)),
             }
