@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
+const API_PATH = '/api/config';
 export const useConfigStore = defineStore('config', {
   state: () => ({
     config: {
@@ -12,15 +13,9 @@ export const useConfigStore = defineStore('config', {
   getters: {},
   actions: {
     fetchConfig: async function () {
-      try {
-        const url = location.protocol + '//' + location.host + '/api/config';
-        const config = await axios.get(url);
-        this.config = config.data;
-      } catch (e) {
-        // TODO add error handling
-        alert(e);
-        console.log(e);
-      }
+      const url = location.protocol + '//' + location.host + API_PATH;
+      const config = await axios.get(url);
+      this.config = config.data;
     },
   },
 });

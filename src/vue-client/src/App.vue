@@ -24,8 +24,11 @@
     </nav>
   </header>
   <main>
+    <div v-if="errorMessage.length > 0" class="alert alert-danger text-center" role="alert">
+      {{ errorMessage }}
+    </div>
     <div
-      v-if="config.global_message.length > 0"
+      v-if="config.global_message.length > 0 && errorMessage.length == 0"
       class="alert alert-warning text-center"
       role="alert"
     >
@@ -67,15 +70,18 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import { useConfigStore } from '@/stores/config';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
+const errorMessage = ref('');
 const configStore = useConfigStore();
 const config = computed(() => {
   return configStore.config;
 });
 
 onMounted(() => {
-  configStore.fetchConfig();
+  configStore
+    .fetchConfig()
+    .catch((e) => (errorMessage.value = 'Failed to read configuration: ' + e));
 });
 </script>
 
