@@ -24,6 +24,16 @@
     </nav>
   </header>
   <main>
+    <div v-if="errorMessage.length > 0" class="alert alert-danger text-center" role="alert">
+      {{ errorMessage }}
+    </div>
+    <div
+      v-if="config.global_message.length > 0 && errorMessage.length == 0"
+      class="alert alert-warning text-center"
+      role="alert"
+    >
+      {{ config.global_message }}
+    </div>
     <div class="container">
       <RouterView />
     </div>
@@ -44,7 +54,14 @@
             </li>
           </ul>
         </div>
-        <div class="col-9 text-center">&copy; Example.com 2023</div>
+        <div class="col-4">
+          <ul class="list-unstyled">
+            <li>
+              {{ config.copyright }}
+            </li>
+            <li>Version: {{ config.version }}</li>
+          </ul>
+        </div>
       </div>
     </div>
   </footer>
@@ -52,6 +69,20 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
+import { useConfigStore } from '@/stores/config';
+import { computed, onMounted, ref } from 'vue';
+
+const errorMessage = ref('');
+const configStore = useConfigStore();
+const config = computed(() => {
+  return configStore.config;
+});
+
+onMounted(() => {
+  configStore
+    .fetchConfig()
+    .catch((e) => (errorMessage.value = 'Failed to read configuration: ' + e));
+});
 </script>
 
 <style lang="scss" scoped>
