@@ -3,16 +3,12 @@ describe('Visiting the app', () => {
     let counter = 0;
     cy.intercept('/api/config', (req) => {
       counter++;
-      // req.on('response', (res) => {
-      //   res.headers = {
-      //     'Content-Type': 'application/json',
-      //   };
-      //   res.body = JSON.stringify({
-      //     copyright: '© Example.com 2023-24',
-      //     version: '0.0.1',
-      //     global_message: '',
-      //   });
-      // });
+      req.on('response', (res) => {
+        res.headers = {
+          'Content-Type': 'application/json',
+        };
+        res.body = { copyright: '© Example.com 2023-24', version: '0.0.1', global_message: '' };
+      });
     }).as('getConfig');
 
     cy.visit('')
