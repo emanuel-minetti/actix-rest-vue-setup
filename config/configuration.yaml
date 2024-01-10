@@ -1,7 +1,7 @@
 application_port: 8080
 client_settings:
   copyright: "© Example.com 2023-24"
-  version: "0.0.1"
+  version: "0.1.0"
   global_message: ""
 log_settings:
   ## Set path to logfile
