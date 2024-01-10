@@ -14,10 +14,12 @@ via [Cypress](https://www.cypress.io/).
 Building is done via [Cargo-Make](https://docs.rs/crate/cargo-make/latest)
 (and of course cargo, npm and [vite](https://vitejs.dev/)).
 
-Some steps will be available via [branches]. Further modularization
-isn't planned.
+CI is done via [GitHubActions](https://github.com/features/actions).
 
-CI is done via [GitHubActions](https://github.com/features/actions). 
+Some steps will be available via 
+[releases](https://github.com/emanuel-minetti/actix-rest-vue-setup/releases).
+If you want to follow up this step see `Base Edition`.
+Further modularization isn't planned.
 
 Next steps will be adding internationalisation (via [vue-i18n](https://vue-i18n.intlify.dev/))
 and implementing a login API and page using a
