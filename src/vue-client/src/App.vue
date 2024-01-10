@@ -24,10 +24,16 @@
     </nav>
   </header>
   <main>
-    <div v-if="errorMessage.length > 0" class="alert alert-danger text-center" role="alert">
+    <div
+      id="app-error-message"
+      v-if="errorMessage.length > 0"
+      class="alert alert-danger text-center"
+      role="alert"
+    >
       {{ errorMessage }}
     </div>
     <div
+      id="app-global-message"
       v-if="config.global_message.length > 0 && errorMessage.length == 0"
       class="alert alert-warning text-center"
       role="alert"
