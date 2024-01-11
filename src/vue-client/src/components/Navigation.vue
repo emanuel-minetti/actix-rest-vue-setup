@@ -13,10 +13,10 @@
       </RouterLink>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <RouterLink class="nav-link" to="/">Home</RouterLink>
+          <RouterLink class="nav-link" to="/">{{ $t('nav.home') }}</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink class="nav-link" to="/about">About</RouterLink>
+          <RouterLink class="nav-link" to="/about">{{ $t('nav.about') }}</RouterLink>
         </li>
       </ul>
     </div>
