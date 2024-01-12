@@ -1,23 +1,14 @@
 import { createI18n } from 'vue-i18n';
 
-const messages = {
-  en: {
-    nav: {
-      home: 'Home',
-      about: 'About',
-    },
-  },
-  de: {
-    nav: {
-      home: 'Startseite',
-      about: 'Über uns',
-    },
-  },
-};
+import en from './locales/en.json';
+import de from './locales/de.json';
 
 export default createI18n({
   legacy: false,
-  locale: 'en',
+  locale: 'de',
   fallbackLocale: 'de',
-  messages,
+  messages: {
+    en,
+    de,
+  },
 });
