@@ -11,6 +11,7 @@
         />
         <span class="h1 text-primary"> Vite App </span>
       </RouterLink>
+      <LanguageSwitcher />
       <ul class="navbar-nav">
         <li class="nav-item">
           <RouterLink class="nav-link" to="/">{{ $t('nav.home') }}</RouterLink>
@@ -25,6 +26,7 @@
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
 </script>
 
 <style scoped lang="scss">
