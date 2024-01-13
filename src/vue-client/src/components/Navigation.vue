@@ -11,15 +11,19 @@
         />
         <span class="h1 text-primary"> Vite App </span>
       </RouterLink>
-      <LanguageSwitcher />
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <RouterLink class="nav-link" to="/">{{ $t('nav.home') }}</RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink class="nav-link" to="/about">{{ $t('nav.about') }}</RouterLink>
-        </li>
-      </ul>
+      <div>
+        <div class="text-end">
+          <LanguageSwitcher />
+        </div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/">{{ $t('nav.home') }}</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/about">{{ $t('nav.about') }}</RouterLink>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </template>
