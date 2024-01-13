@@ -1,6 +1,6 @@
 <template>
-  <span :class="`fi fi-${flag_abbrev}`"></span>
-  <select class="form-select" @change="switchLanguage">
+  <span :class="`fi fi-${flagAbbrev}`" @click="showSelect = !showSelect"></span>
+  <select v-if="showSelect" class="form-select" @change="switchLanguage">
     <option
       v-for="sLocale in supportedLocales"
       :key="`locale-${sLocale}`"
@@ -15,15 +15,18 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Translations from '@/i18n/Translations';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const { t, locale } = useI18n();
 const supportedLocales = Translations.supportedLocales;
+
+const showSelect = ref(false);
 const switchLanguage = async (event: any) => {
   const newLocale = event.target.value;
   await Translations.switchLanguage(newLocale);
+  showSelect.value = false;
 };
-const flag_abbrev = computed(() => {
+const flagAbbrev = computed(() => {
   return locale.value === 'en' ? 'gb' : locale.value;
 });
 </script>
