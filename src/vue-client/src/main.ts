@@ -1,6 +1,5 @@
 import './scss/main.scss';
-// noinspection ES6UnusedImports
-
+import '@/../node_modules/flag-icons/css/flag-icons.min.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 
