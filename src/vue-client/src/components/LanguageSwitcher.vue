@@ -1,6 +1,6 @@
 <template>
   <span :class="`fi fi-${flagAbbrev}`" @click="showSelect = !showSelect"></span>
-  <select v-if="showSelect" class="form-select" @change="switchLanguage">
+  <select v-if="showSelect" class="form-select" @change="switchLanguage" @blur="showSelect = false">
     <option
       v-for="sLocale in supportedLocales"
       :key="`locale-${sLocale}`"
