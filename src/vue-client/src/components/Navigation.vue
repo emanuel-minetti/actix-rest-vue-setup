@@ -20,7 +20,9 @@
             <RouterLink class="nav-link" to="/">{{ $t('nav.home') }}</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/about">{{ $t('nav.about') }}</RouterLink>
+            <RouterLink id="nav-about-link" class="nav-link" to="/about">
+              {{ $t('nav.about') }}
+            </RouterLink>
           </li>
         </ul>
       </div>

@@ -13,8 +13,7 @@ describe('Visiting the home page', () => {
 
     cy.visit('');
     expect(counter).to.equal(0);
-    cy.get('.navbar-nav > :nth-child(2) > .nav-link')
-      .contains('About')
+    cy.get('#nav-about-link')
       .click()
       .then(() => {
         expect(counter).to.equal(1);
