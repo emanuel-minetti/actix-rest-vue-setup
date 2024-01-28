@@ -21,10 +21,10 @@
     "vue-router": "^4.2.5",
     "axios": "^1.6.5",
     "vue-i18n": "^9.9.0",
-    "@intlify/unplugin-vue-i18n": "^2.0.0",
     "flag-icons": "^7.1.0"
   },
   "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^2.0.0",
     "@rushstack/eslint-patch": "^1.7.0",
     "@tsconfig/node18": "^18.2.2",
     "@types/bootstrap": "^5.2.10",
