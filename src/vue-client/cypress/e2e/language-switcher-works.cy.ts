@@ -1,7 +1,7 @@
 import type { LocaleAbbrev } from '../../src/i18n/Translations';
 
 describe('Visiting the app', () => {
-  const DEFAULT_LANG: LocaleAbbrev = 'de';
+  const DEFAULT_LANG: LocaleAbbrev = 'en';
   const FLAG_ABBREV = DEFAULT_LANG == 'en' ? 'gb' : DEFAULT_LANG;
 
   beforeEach(() => {
