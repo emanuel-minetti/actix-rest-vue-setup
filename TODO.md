@@ -1,3 +1,4 @@
+- Fix keyboard usage by using default html behaviour as much as possible.
 - Add Login and restrict side and API access
 - Instrument routes.
 - Improve health check for DB connection and FS access.
