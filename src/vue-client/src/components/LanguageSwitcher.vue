@@ -3,14 +3,14 @@
     tabindex="0"
     :class="`fi fi-${flagAbbrev}`"
     @click="flagClickedHandler"
-    @keyup="listenToEnterHandler"
+    @keyup="listenToSpaceHandler"
   ></div>
   <select
     id="ls-select"
     v-if="showSelect"
     class="form-select"
+    @keyup="listenToSpaceHandler"
     @mouseup="selectMouseupHandler"
-    @change="optionMouseupHandler"
     @blur="showSelect = false"
   >
     <option
@@ -19,6 +19,7 @@
       :value="sLocale"
       :selected="locale === sLocale"
       @mouseup="optionMouseupHandler"
+      @keyup="listenToEnterHandler"
     >
       {{ t(`locale.${sLocale}`) }}
     </option>
@@ -42,11 +43,28 @@ const flagClickedHandler = async () => {
   const selectElement = document.getElementById('ls-select');
   selectElement!.focus();
 };
-const listenToEnterHandler = (event: KeyboardEvent) => {
+const listenToSpaceHandler = (event: KeyboardEvent) => {
   const target = <HTMLElement>event.target;
-  if (event.key == 'Enter') {
-    target.click();
+  if (event.key == ' ') {
+    if (target instanceof HTMLSelectElement) {
+      optionMouseupHandler(event);
+    } else {
+      target.click();
+    }
   }
+};
+const listenToEnterHandler = (event: KeyboardEvent) => {
+  // TODO implement
+  // selectMouseupHandler(event);
+  // const target = <HTMLElement>event.target;
+  // target.click();
+  // if (event.key == ' ') {
+  //   if (target instanceof HTMLSelectElement) {
+  //     optionMouseupHandler(event);
+  //   } else {
+  //     target.click();
+  //   }
+  // }
 };
 const selectMouseupHandler = async (event: Event) => {
   const target: HTMLSelectElement = <HTMLSelectElement>event.target!;
